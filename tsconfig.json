@@ -1,20 +1,19 @@
 {
-  "extends": "astro/tsconfigs/base",
+  "extends": "astro/tsconfigs/strict",
   "compilerOptions": {
-    "moduleResolution": "node",
+    "lib": ["ESNext"],
+    "outDir": "dist",
+    "declaration": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
     "jsx": "preserve",
-    "strict": true,
-    "allowSyntheticDefaultImports": true,
-    "baseUrl": ".",
-    "paths": {
-      "@components/*": ["src/components/*"],
-      "@constants/*": ["src/constants/*"],
-      "@fixtures/*": ["src/fixtures/*"],
-      "@layouts/*": ["src/layouts/*"],
-      "@pages/*": ["src/pages/*"],
-      "@styles/*": ["src/styles/*"],
-      "@plugins/*": ["src/plugins/*"],
-      "@assets/*": ["src/assets/*"]
-    }
-  }
+    "verbatimModuleSyntax": true
+  },
+  "include": [
+    "src/**/*",
+    ".preview/**/*",
+    "rollup.config.js",
+    "tailwind.config.mjs",
+    "vitest.config.ts"
+  ]
 }
