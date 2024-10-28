@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { expect, describe, it, vi, afterEach, type Mock } from 'vitest'
 import { abi, post, type RequestBody } from './fulfillment'
 import type { APIContext } from 'astro'
