@@ -1,7 +1,0 @@
----
-import OpenModalButton_ from './OpenModalButton.svelte'
-
-const ping = Astro.url.searchParams.get('ping')
----
-
-<OpenModalButton_ client:load ping={ping === 'publish'} />
