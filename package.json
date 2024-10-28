@@ -1,5 +1,5 @@
 {
-  "name": "clubs",
+  "name": "@devprotocol/clubs-plugin-payments",
   "version": "0.0.1",
   "type": "module",
   "scripts": {
@@ -66,7 +66,7 @@
     "@devprotocol/clubs-core": "^3.0.0",
     "ethers": "^6.0.0"
   },
-  "repository": "https://github.com/dev-protocol/clubs.git",
+  "repository": "https://github.com/dev-protocol/clubs-plugin-payments.git",
   "author": "",
   "license": "PolyForm Perimeter License 1.0.0",
   "packageManager": "yarn@4.5.0"
