@@ -19,6 +19,7 @@
   export let item: ComposedItem
   export let chainId: number
   export let rpcUrl: string
+  export let debugMode: boolean
   let account: string | undefined
   let customerEmail: string | undefined
   let customerName: string | undefined
@@ -94,7 +95,7 @@
             account: account_,
             customerName: customerName_,
             customerEmail: customerEmail_,
-            dummy: chainId !== 137 && chainId !== 1,
+            dummy: debugMode,
           }),
         ) ?? new Error('Required fields missing'),
     )

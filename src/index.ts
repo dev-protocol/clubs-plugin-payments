@@ -42,6 +42,7 @@ export const getPagePaths = (async (
   utils,
 ) => {
   const items = composeItems(options, utils)
+  const debugMode = options.find(({ key }) => key === 'debug')?.value === true
 
   return items
     ? [
@@ -55,6 +56,7 @@ export const getPagePaths = (async (
             signals: [ClubsPluginSignal.DisplayFullPage],
             accessControlUrl: item.source.accessControl?.url,
             accessControlDescription: item.source.accessControl?.description,
+            debugMode,
           },
           component: Id,
         })),
