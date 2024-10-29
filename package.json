@@ -24,7 +24,7 @@
     "lint": "yarn lint:eslint && yarn lint:format",
     "lint:eslint": "eslint . --fix",
     "lint:format": "prettier --write '**/*.{ts,js,tsx,jsx,astro,vue,svelte,json,md,yml}'",
-    "prepack": "yarn test --run && yarn build",
+    "prepack": "yarn test --run && npm run build",
     "prepare": "husky",
     "typecheck": "astro check && tsc --noEmit && svelte-check && vue-tsc --noEmit --p tsconfig.vue.json"
   },
