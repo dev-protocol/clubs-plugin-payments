@@ -56,7 +56,13 @@ const { PUBLIC_POP_CLIENT_KEY } = import.meta.env
       rpcUrl={rpcUrl}
       debugMode={debugMode}
     />
-    <TransactionFormT client:only="vue"/>
+    <TransactionFormT
+      client:only="vue"
+      item={item}
+      chainId={chainId}
+      rpcUrl={rpcUrl}
+      debugMode={debugMode}
+    />
   </div>
   <div slot="checkout:after:transaction-form" class="p-3">
     <a
