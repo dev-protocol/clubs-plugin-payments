@@ -2,6 +2,20 @@
   "name": "@devprotocol/clubs-plugin-payments",
   "version": "0.0.1",
   "type": "module",
+  "exports": {
+    ".": {
+      "default": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist/*.d.ts",
+    "dist/*.js",
+    "!**/*.test.*",
+    "!**/vitest.*",
+    "src"
+  ],
   "scripts": {
     "test": "vitest",
     "preview": "astro --root .preview/preview.ssr dev",
@@ -10,7 +24,7 @@
     "lint": "yarn lint:eslint && yarn lint:format",
     "lint:eslint": "eslint . --fix",
     "lint:format": "prettier --write '**/*.{ts,js,tsx,jsx,astro,vue,svelte,json,md,yml}'",
-    "prepack": "yarn test && yarn build",
+    "prepack": "yarn test --run && yarn build",
     "prepare": "husky",
     "typecheck": "astro check && tsc --noEmit && svelte-check && vue-tsc --noEmit --p tsconfig.vue.json"
   },
@@ -44,6 +58,7 @@
     "prettier-plugin-svelte": "3.2.7",
     "prettier-plugin-tailwindcss": "0.6.8",
     "rollup": "^4.24.2",
+    "rollup-plugin-dts": "^6.1.1",
     "sass": "^1.80.4",
     "svelte": "4.2.19",
     "svelte-check": "^4.0.0",
