@@ -1,10 +1,12 @@
 ---
 import type { ComposedItem } from '.'
 import TransactionForm from './TransactionForm.svelte'
+import TransactionFormT from './TransactionFormT.vue'
 import type { ClubsPropsPages } from '@devprotocol/clubs-core'
 import { Checkout } from '@devprotocol/clubs-core/ui/components'
 import { i18nFactory } from '@devprotocol/clubs-core'
 import { Strings } from './i18n'
+import type { only } from 'node:test'
 
 const { item, propertyAddress, rpcUrl, chainId, debugMode, ...other } =
   Astro.props as ClubsPropsPages & {
@@ -54,6 +56,7 @@ const { PUBLIC_POP_CLIENT_KEY } = import.meta.env
       rpcUrl={rpcUrl}
       debugMode={debugMode}
     />
+    <TransactionFormT client:only="vue"/>
   </div>
   <div slot="checkout:after:transaction-form" class="p-3">
     <a
