@@ -80,7 +80,7 @@
     "redis": "4.7.0"
   },
   "peerDependencies": {
-    "@devprotocol/clubs-core": "^3.0.0",
+    "@devprotocol/clubs-core": "^3.22.1",
     "ethers": "^6.0.0"
   },
   "repository": "https://github.com/dev-protocol/clubs-plugin-payments.git",

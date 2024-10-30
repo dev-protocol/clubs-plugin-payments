@@ -23,7 +23,7 @@ import screenshot1 from './images/clubs-payments-1.jpg'
 import screenshot2 from './images/clubs-payments-2.jpg'
 import screenshot3 from './images/clubs-payments-3.jpg'
 import Admin from './pages/admin.astro'
-import TransactionForm from './TransactionForm.svelte'
+import TransactionForm from './TransactionForm.vue'
 
 export type Override = {
   id: string

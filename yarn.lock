@@ -663,7 +663,7 @@ __metadata:
     vue: "npm:3.4.38"
     vue-tsc: "npm:^2.0.0"
   peerDependencies:
-    "@devprotocol/clubs-core": ^3.0.0
+    "@devprotocol/clubs-core": ^3.22.1
     ethers: ^6.0.0
   languageName: unknown
   linkType: soft
