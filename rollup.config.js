@@ -45,6 +45,33 @@ export default [
     ],
   },
   {
+    input: 'src/components/index.ts',
+    output: [
+      {
+        file: 'dist/components.js',
+        format: 'es',
+      },
+    ],
+    plugins: [
+      typescript(),
+      useSrc({
+        ext: ['.astro', '.vue'],
+        dir,
+        out: (path) => path.replace('src/components', 'dist'),
+      }),
+    ],
+  },
+  {
+    input: 'src/utils/index.ts',
+    output: [
+      {
+        file: 'dist/utils.js',
+        format: 'es',
+      },
+    ],
+    plugins: [typescript()],
+  },
+  {
     input: 'dist/src/index.d.ts',
     output: [{ file: 'dist/index.d.ts', format: 'es' }],
     plugins: [
@@ -55,5 +82,22 @@ export default [
         out: (path) => path.replace('dist/src', 'dist'),
       }),
     ],
+  },
+  {
+    input: 'dist/src/components/index.d.ts',
+    output: [{ file: 'components.d.ts', format: 'es' }],
+    plugins: [
+      dts(),
+      useSrc({
+        ext: ['.astro', '.vue'],
+        dir,
+        out: (path) => path.replace('dist/src/components', ''),
+      }),
+    ],
+  },
+  {
+    input: 'dist/src/utils/index.d.ts',
+    output: [{ file: 'utils.d.ts', format: 'es' }],
+    plugins: [dts()],
   },
 ]

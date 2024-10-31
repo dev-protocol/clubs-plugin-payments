@@ -39,5 +39,5 @@ export default tseslint.config(
       '@typescript-eslint/no-explicit-any': 'off',
     },
   },
-  { ignores: ['dist', '.yarn'] },
+  { ignores: ['dist', '.yarn', '*.d.ts'] },
 )

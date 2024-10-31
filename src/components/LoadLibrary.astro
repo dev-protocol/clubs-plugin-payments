@@ -1,0 +1,12 @@
+---
+import { LibraryPath } from '../constants'
+
+type Props = {
+  clientKey: string
+}
+const { clientKey } = Astro.props
+---
+
+<!-- Load Veritrans SDK: This will be exposed as `window.pop` -->
+<script type="text/javascript" src={LibraryPath} data-client-key={clientKey}
+></script>

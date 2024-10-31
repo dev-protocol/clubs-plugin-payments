@@ -5,6 +5,7 @@ import type { ClubsPropsPages } from '@devprotocol/clubs-core'
 import { Checkout } from '@devprotocol/clubs-core/ui/components'
 import { i18nFactory } from '@devprotocol/clubs-core'
 import { Strings } from './i18n'
+import LoadLibrary from './components/LoadLibrary.astro'
 
 const { item, propertyAddress, rpcUrl, chainId, debugMode, ...other } =
   Astro.props as ClubsPropsPages & {
@@ -25,11 +26,7 @@ const i18n = i18nBase(langs)
 const { PUBLIC_POP_CLIENT_KEY } = import.meta.env
 ---
 
-<!-- Load Veritrans SDK: This will be exposed as `window.pop` -->
-<script
-  type="text/javascript"
-  src="https://pay.veritrans.co.jp/pop/v1/javascripts/pop.js"
-  data-client-key={PUBLIC_POP_CLIENT_KEY}></script>
+<LoadLibrary clientKey={PUBLIC_POP_CLIENT_KEY} />
 
 <Checkout
   amount={item.price.yen}
