@@ -1,4 +1,4 @@
-import type { Membership } from '@devprotocol/clubs-core'
+import type { InjectedTier, Membership } from '@devprotocol/clubs-core'
 import type {
   ClubsFunctionGetAdminPaths,
   ClubsFunctionGetPagePaths,
@@ -15,7 +15,6 @@ import type { ClubsFunctionGetApiPaths } from '@devprotocol/clubs-core'
 import { composeItems } from './utils/compose-items'
 import type { UndefinedOr } from '@devprotocol/util-ts'
 import { CurrencyOption } from '@devprotocol/clubs-core'
-import type { InjectedTiers } from '@devprotocol/clubs-core'
 import { bytes32Hex } from '@devprotocol/clubs-core'
 import Icon from './images/Icon.png'
 import Readme from './readme/index.astro'
@@ -25,7 +24,6 @@ import screenshot3 from './images/clubs-payments-3.jpg'
 import Admin from './pages/admin.astro'
 
 export type Override = {
-  id: string
   importFrom?: string
   key?: string
   payload: string | Uint8Array
@@ -114,17 +112,20 @@ export const getApiPaths = (async (
 
 export const getSlots = (async (options, { offerings }, utils) => {
   const items = composeItems(options, utils, offerings)
-  const tiers: InjectedTiers = items.map((item) => ({
-    ...item,
-    currency: item.price.yen
-      ? ('yen' as unknown as CurrencyOption)
-      : (undefined as never),
-    title: item.source.name,
-    amount: item.price.yen,
-    badgeImageSrc: item.source.imageSrc,
-    badgeImageDescription: item.source.description,
-    checkoutUrl: `/fiat/yen/${bytes32Hex(item.payload)}`,
-  }))
+  const tiers = items.map(
+    (item) =>
+      ({
+        ...item,
+        currency: item.price.yen
+          ? ('yen' as unknown as CurrencyOption)
+          : (undefined as never),
+        title: item.source.name,
+        amount: item.price.yen,
+        badgeImageSrc: item.source.imageSrc,
+        badgeImageDescription: item.source.description,
+        checkoutUrl: `/fiat/yen/${bytes32Hex(item.payload)}`,
+      }) satisfies Omit<InjectedTier, 'id'>,
+  )
 
   return utils.factory === 'page' && items.length > 0
     ? [

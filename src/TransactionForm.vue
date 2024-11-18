@@ -75,7 +75,11 @@ import type { ComposedItem } from '.'
 import { whenDefined, whenDefinedAll, whenNotError } from '@devprotocol/util-ts'
 import { JsonRpcProvider } from 'ethers'
 import { clientsSTokens } from '@devprotocol/dev-kit'
-import { i18nFactory, mintedIdByLogs } from '@devprotocol/clubs-core'
+import {
+  bytes32Hex,
+  i18nFactory,
+  mintedIdByLogs,
+} from '@devprotocol/clubs-core'
 import {
   IconBouncingArrowRight,
   IconSpinner,
@@ -158,9 +162,14 @@ const clickHandler = async () => {
     pop,
     () =>
       whenDefinedAll(
-        [props.item.id, account.value, customerName.value, customerEmail.value],
-        ([id_, account_, customerName_, customerEmail_]) => ({
-          id: id_,
+        [
+          props.item.payload,
+          account.value,
+          customerName.value,
+          customerEmail.value,
+        ],
+        ([payload_, account_, customerName_, customerEmail_]) => ({
+          payload: payload_,
           account: account_,
           customerName: customerName_,
           customerEmail: customerEmail_,
@@ -173,12 +182,12 @@ const clickHandler = async () => {
 
   const paymentKeyApi = whenNotError(
     params,
-    ({ id, account, customerName, customerEmail, dummy }) => {
+    ({ payload, account, customerName, customerEmail, dummy }) => {
       const url = new URL(
         '/api/devprotocol:clubs:plugin:clubs-payments/payment-key',
         location.origin,
       )
-      url.searchParams.set('id', id)
+      url.searchParams.set('payload', bytes32Hex(payload))
       url.searchParams.set('eoa', account)
       url.searchParams.set('email.customer_name', customerName)
       url.searchParams.set('email.customer_email_address', customerEmail)

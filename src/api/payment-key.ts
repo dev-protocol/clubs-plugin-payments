@@ -124,7 +124,7 @@ export const get: ({
     /**
      * Get request parameters.
      */
-    const membershipId = url.searchParams.get('id')
+    const offeringPayload = url.searchParams.get('payload')
     const eoa = url.searchParams.get('eoa')
     const dummy = url.searchParams.get('dummy') === 'true'
     const customer_name = url.searchParams.get('email.customer_name')
@@ -136,12 +136,10 @@ export const get: ({
      * Get the expected overridden membership and its source.
      */
     const membership =
-      _items.find((mem) => mem.id === membershipId) ??
+      _items.find((mem) => bytes32Hex(mem.payload) === offeringPayload) ??
       new Error('Missing item ID')
 
-    const payloadHex = whenNotError(membership, (mem) =>
-      typeof mem.payload === 'string' ? mem.payload : keccak256(mem.payload),
-    )
+    const payloadHex = whenNotError(membership, bytes32Hex)
 
     const sourcePaymentToken = whenNotError(membership, ({ source }) =>
       (source.currency === 'MATIC' && (chainId === 137 || chainId === 80001)) ||
