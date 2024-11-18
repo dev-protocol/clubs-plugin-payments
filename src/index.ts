@@ -26,8 +26,8 @@ import Admin from './pages/admin.astro'
 
 export type Override = {
   id: string
-  importFrom: string
-  key: string
+  importFrom?: string
+  key?: string
   payload: string | Uint8Array
   price: {
     yen: number
@@ -38,10 +38,10 @@ export type ComposedItem = Override & { source: Membership }
 
 export const getPagePaths = (async (
   options,
-  { propertyAddress, rpcUrl, chainId },
+  { propertyAddress, rpcUrl, chainId, offerings },
   utils,
 ) => {
-  const items = composeItems(options, utils)
+  const items = composeItems(options, utils, offerings)
   const debugMode = options.find(({ key }) => key === 'debug')?.value === true
 
   return items
@@ -64,8 +64,8 @@ export const getPagePaths = (async (
     : []
 }) satisfies ClubsFunctionGetPagePaths
 
-export const getAdminPaths = (async (options, { name }, utils) => {
-  const items = composeItems(options, utils)
+export const getAdminPaths = (async (options, { name, offerings }, utils) => {
+  const items = composeItems(options, utils, offerings)
   return [
     {
       paths: ['fiat'],
@@ -80,10 +80,10 @@ export const getAdminPaths = (async (options, { name }, utils) => {
 
 export const getApiPaths = (async (
   options,
-  { propertyAddress, chainId, rpcUrl },
+  { propertyAddress, chainId, rpcUrl, offerings },
   utils,
 ) => {
-  const items = composeItems(options, utils)
+  const items = composeItems(options, utils, offerings)
   const webhooks =
     (options.find((opt) => opt.key === 'webhooks')?.value as UndefinedOr<{
       fulfillment?: { encrypted: string }
@@ -112,8 +112,8 @@ export const getApiPaths = (async (
   ]
 }) satisfies ClubsFunctionGetApiPaths
 
-export const getSlots = (async (options, __, utils) => {
-  const items = composeItems(options, utils)
+export const getSlots = (async (options, { offerings }, utils) => {
+  const items = composeItems(options, utils, offerings)
   const tiers: InjectedTiers = items.map((item) => ({
     ...item,
     currency: item.price.yen
