@@ -619,7 +619,7 @@ __metadata:
     "@types/node": "npm:^22.0.0"
     "@types/ramda": "npm:^0.30.2"
     "@types/react": "npm:19.0.1"
-    "@types/react-dom": "npm:19.0.1"
+    "@types/react-dom": "npm:19.0.2"
     "@types/uuid": "npm:^10.0.0"
     astro: "npm:5.0.4"
     bignumber.js: "npm:9.1.2"
@@ -2345,21 +2345,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-dom@npm:19.0.1":
-  version: 19.0.1
-  resolution: "@types/react-dom@npm:19.0.1"
-  dependencies:
-    "@types/react": "npm:*"
-  checksum: 10c0/fb40069a7c5c70475155dff91d25ff5a51226c14d45c8ad55894480366876426981c8be63ef322486af879bb220bf48443f2344c1a89cb75a47a1a761acee9d3
-  languageName: node
-  linkType: hard
-
-"@types/react@npm:*":
-  version: 19.0.0
-  resolution: "@types/react@npm:19.0.0"
-  dependencies:
-    csstype: "npm:^3.0.2"
-  checksum: 10c0/d7753ec27c5fa48f3aab97d7d4e9e33ad62bbff761a421bfc56c7b403fab9e3ed266d47793e44311ca2f0034e8ae428cea4aecbe1c542b418cfe72a520eab931
+"@types/react-dom@npm:19.0.2":
+  version: 19.0.2
+  resolution: "@types/react-dom@npm:19.0.2"
+  peerDependencies:
+    "@types/react": ^19.0.0
+  checksum: 10c0/3d0c7b78dbe8df64ea769f30af990a5950173a8321c745fe11094d765423f7964c3519dca6e7cd36b4be6521c8efc690bdd3b79b327b229dd1e9d5a8bad677dd
   languageName: node
   linkType: hard
 
