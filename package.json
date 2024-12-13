@@ -1,11 +1,12 @@
 {
   "name": "@devprotocol/clubs-plugin-payments",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "type": "module",
   "exports": {
     ".": {
-      "default": "./dist/index.js",
-      "types": "./dist/index.d.ts"
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
     },
     "./components": {
       "default": "./dist/components.js",
