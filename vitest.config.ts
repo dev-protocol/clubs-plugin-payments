@@ -6,6 +6,7 @@ import vue from '@vitejs/plugin-vue'
 const ext = ['.astro', '.png', '.jpg', '.gif', '.svg', '.css', '.scss']
 
 export default defineConfig({
+  ssr: { noExternal: [/^.*clubs-plugin.*$/] },
   plugins: [
     vue(),
     svelte({ preprocess: [vitePreprocess()] }),
