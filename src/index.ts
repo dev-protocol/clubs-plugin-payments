@@ -76,11 +76,8 @@ export const getAdminPaths = (async (options, { name, offerings }, utils) => {
   ]
 }) satisfies ClubsFunctionGetAdminPaths
 
-export const getApiPaths = (async (
-  options,
-  { propertyAddress, chainId, rpcUrl, offerings },
-  utils,
-) => {
+export const getApiPaths = (async (options, config, utils) => {
+  const { propertyAddress, chainId, rpcUrl, offerings } = config
   const items = composeItems(options, utils, offerings)
   const webhooks =
     (options.find((opt) => opt.key === 'webhooks')?.value as UndefinedOr<{
@@ -96,7 +93,7 @@ export const getApiPaths = (async (
     {
       paths: ['payment-key'],
       method: 'GET',
-      handler: get({ items, propertyAddress, chainId }),
+      handler: get({ config, items, propertyAddress, chainId }),
     },
     {
       paths: ['fulfillment'],

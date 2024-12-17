@@ -11,11 +11,21 @@ import {
 import BigNumber from 'bignumber.js'
 import { abi } from './fulfillment'
 import type { ComposedItem } from '..'
-import { whenNotError, whenNotErrorAll } from '@devprotocol/util-ts'
+import {
+  isNotError,
+  whenDefinedAll,
+  whenNotError,
+  whenNotErrorAll,
+} from '@devprotocol/util-ts'
 import { createClient } from 'redis'
 import { generateFulFillmentParamsId } from '../utils/gen-key'
-import { bytes32Hex, getTokenAddress } from '@devprotocol/clubs-core'
+import {
+  bytes32Hex,
+  type ClubsConfiguration,
+  getTokenAddress,
+} from '@devprotocol/clubs-core'
 import { replaceWithFwdHost } from '../fixtures/url'
+import { composePassportItem } from '../utils/compose-passport-item'
 
 const { POP_SERVER_KEY, REDIS_URL, REDIS_USERNAME, REDIS_PASSWORD } =
   import.meta.env
@@ -111,15 +121,17 @@ export type PaymentKeyOptions = {
  * ?id={MEMBERSHIP_ID}&eoa={USER_EOA}&email.customer_name={USER_NAME}&email.customer_email_address={USER_EMAIL_ADDRESS}&dummy={OPTIONAL_BOOLEAN}
  */
 export const get: ({
+  config,
   propertyAddress,
   chainId,
   items,
 }: {
+  config: ClubsConfiguration
   propertyAddress: string
   chainId: number
   items: ComposedItem[]
 }) => APIRoute =
-  ({ propertyAddress, chainId, items: _items }) =>
+  ({ config, propertyAddress, chainId, items: _items }) =>
   async ({ url, request }) => {
     /**
      * Get request parameters.
@@ -132,11 +144,29 @@ export const get: ({
       'email.customer_email_address',
     )
 
+    const client = await whenNotError(
+      createClient({
+        url: REDIS_URL,
+        username: REDIS_USERNAME ?? '',
+        password: REDIS_PASSWORD ?? '',
+      }),
+      (db) =>
+        db
+          .connect()
+          .then(() => db)
+          .catch((err) => new Error(err)),
+    )
+
     /**
      * Get the expected overridden membership and its source.
      */
     const membership =
       _items.find((mem) => bytes32Hex(mem.payload) === offeringPayload) ??
+      (await whenDefinedAll([offeringPayload, client], ([payload, redis]) =>
+        isNotError(redis)
+          ? composePassportItem(payload, { config, client: redis })
+          : undefined,
+      )) ??
       new Error('Missing item ID')
 
     const payloadHex = whenNotError(membership, bytes32Hex)
@@ -192,19 +222,6 @@ export const get: ({
       `/api/devprotocol:clubs:plugin:clubs-payments/fulfillment`,
       new URL(currentUrl).origin.replace('http:', 'https:'),
     ).toString()
-
-    const client = await whenNotError(
-      createClient({
-        url: REDIS_URL,
-        username: REDIS_USERNAME ?? '',
-        password: REDIS_PASSWORD ?? '',
-      }),
-      (db) =>
-        db
-          .connect()
-          .then(() => db)
-          .catch((err) => new Error(err)),
-    )
 
     const paramsSaved = await whenNotErrorAll(
       [client, abiEncodedParamsForFulfilment],
