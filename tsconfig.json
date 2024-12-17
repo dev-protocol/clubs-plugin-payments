@@ -7,7 +7,7 @@
     "skipLibCheck": true,
     "resolveJsonModule": true,
     "jsx": "preserve",
-    "verbatimModuleSyntax": true,
+    "verbatimModuleSyntax": false,
     "types": ["node", "astro/client"]
   },
   "include": [
