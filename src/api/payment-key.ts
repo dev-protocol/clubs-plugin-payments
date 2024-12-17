@@ -21,7 +21,7 @@ import { createClient } from 'redis'
 import { generateFulFillmentParamsId } from '../utils/gen-key'
 import {
   bytes32Hex,
-  ClubsConfiguration,
+  type ClubsConfiguration,
   getTokenAddress,
 } from '@devprotocol/clubs-core'
 import { replaceWithFwdHost } from '../fixtures/url'
