@@ -1,5 +1,5 @@
 import { createClient } from 'redis'
-import type { ComposedItem } from '..'
+import type { ComposedItem } from '../types'
 import { ClubsConfiguration } from '@devprotocol/clubs-core'
 import { checkoutPassportItemForPayload } from '@devprotocol/clubs-plugin-passports'
 import { UndefinedOr, whenDefinedAll } from '@devprotocol/util-ts'

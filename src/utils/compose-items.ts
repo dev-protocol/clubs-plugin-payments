@@ -5,7 +5,7 @@ import {
 } from '@devprotocol/clubs-core'
 import { whenDefined, type UndefinedOr } from '@devprotocol/util-ts'
 
-import type { ComposedItem, Override } from '..'
+import type { ComposedItem, Override } from '../types'
 import type { ClubsConfiguration, Membership } from '@devprotocol/clubs-core'
 import type { Collection } from '../types'
 

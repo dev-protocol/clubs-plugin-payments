@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { expect, describe, it, vi, afterEach, type Mock } from 'vitest'
-import { abi, post, type RequestBody } from './fulfillment'
+import { post, type RequestBody } from './fulfillment'
+import { abi } from '../constants'
 import type { APIContext } from 'astro'
 import { toPairs } from 'ramda'
 import redis from 'redis'

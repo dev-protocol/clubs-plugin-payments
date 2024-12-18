@@ -9,8 +9,8 @@ import {
   randomBytes,
 } from 'ethers'
 import BigNumber from 'bignumber.js'
-import { abi } from './fulfillment'
-import type { ComposedItem } from '..'
+import { abi } from '../constants'
+import type { ComposedItem } from '../types'
 import {
   isNotError,
   whenDefinedAll,

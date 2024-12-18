@@ -14,16 +14,7 @@ import { Status, createRequestBody } from '../utils/webhooks'
 import { createClient } from 'redis'
 import { generateFulFillmentParamsId } from '../utils/gen-key'
 import jsonwebtoken from 'jsonwebtoken'
-
-export const abi = [
-  'address _mintFor',
-  'address _propertyAddress',
-  'bytes32 _payload',
-  'address _paymentToken',
-  'uint256 _paymentAmount',
-  'address _feeBeneficiary',
-  'uint256 _feePercentage',
-]
+import { abi } from '../constants'
 
 export type RequestBody = {
   merchant_id: string
