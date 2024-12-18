@@ -71,7 +71,7 @@
 <script lang="ts" setup>
 import { ref, onMounted } from 'vue'
 import type { Failure, Success } from './api/payment-key'
-import type { ComposedItem } from '.'
+import type { ComposedItem } from './types'
 import { whenDefined, whenDefinedAll, whenNotError } from '@devprotocol/util-ts'
 import { JsonRpcProvider } from 'ethers'
 import { clientsSTokens } from '@devprotocol/dev-kit'

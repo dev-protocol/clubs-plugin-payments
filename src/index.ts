@@ -1,4 +1,4 @@
-import type { InjectedTier, Membership } from '@devprotocol/clubs-core'
+import type { InjectedTier } from '@devprotocol/clubs-core'
 import type {
   ClubsFunctionGetAdminPaths,
   ClubsFunctionGetPagePaths,
@@ -22,17 +22,8 @@ import screenshot1 from './images/clubs-payments-1.jpg'
 import screenshot2 from './images/clubs-payments-2.jpg'
 import screenshot3 from './images/clubs-payments-3.jpg'
 import Admin from './pages/admin.astro'
-
-export type Override = {
-  importFrom?: string
-  key?: string
-  payload: string | Uint8Array
-  price: {
-    yen: number
-  }
-}
-
-export type ComposedItem = Override & { source: Membership }
+import { get } from './api/payment-key'
+import { post } from './api/fulfillment'
 
 export const getPagePaths = (async (
   options,
@@ -83,11 +74,6 @@ export const getApiPaths = (async (options, config, utils) => {
     (options.find((opt) => opt.key === 'webhooks')?.value as UndefinedOr<{
       fulfillment?: { encrypted: string }
     }>) ?? {}
-
-  const [{ get }, { post }] = await Promise.all([
-    import('./api/payment-key'),
-    import('./api/fulfillment'),
-  ])
 
   return [
     {

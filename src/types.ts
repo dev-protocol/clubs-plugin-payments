@@ -19,3 +19,14 @@ export type Collection = {
   memberships: CollectionMembership[]
   requiredMemberships?: string[]
 }
+
+export type Override = {
+  importFrom?: string
+  key?: string
+  payload: string | Uint8Array
+  price: {
+    yen: number
+  }
+}
+
+export type ComposedItem = Override & { source: Membership }
