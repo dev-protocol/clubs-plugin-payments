@@ -1,7 +1,7 @@
 ---
 import AdminAirtable from '../components/AdminAirtable.vue'
 import type { ClubsPropsAdminPages } from '@devprotocol/clubs-core'
-import type { ComposedItem } from '..'
+import type { ComposedItem } from '../types'
 
 type Props = { items: ComposedItem[]; name: string } & ClubsPropsAdminPages
 const { items, name, clubs } = Astro.props
