@@ -69,7 +69,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, useTemplateRef } from 'vue'
 import type { Failure, Success } from './api/payment-key'
 import type { ComposedItem } from './types'
 import { whenDefined, whenDefinedAll, whenNotError } from '@devprotocol/util-ts'
@@ -98,7 +98,7 @@ const customerEmail = ref<string | undefined>(undefined)
 const customerName = ref<string | undefined>(undefined)
 const loading = ref(false)
 const error = ref<string | undefined>(undefined)
-const component = ref<Element | undefined>(undefined)
+const component = useTemplateRef('component')
 const waitingForMinted = ref(false)
 const i18nBase = i18nFactory(Strings)
 const i18n = ref(i18nBase(['en']))
@@ -244,6 +244,8 @@ const clickHandler = async () => {
   const result = await whenNotError(pay, waitForMinted)
 
   waitingForMinted.value = false
+
+  console.log('component.value', component.value)
 
   return result instanceof Error
     ? onError(result.message)
