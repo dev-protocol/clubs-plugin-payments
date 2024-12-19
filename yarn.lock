@@ -654,7 +654,7 @@ __metadata:
     "@types/jsonwebtoken": "npm:^9.0.7"
     "@types/node": "npm:^22.0.0"
     "@types/ramda": "npm:^0.30.2"
-    "@types/react": "npm:19.0.1"
+    "@types/react": "npm:19.0.2"
     "@types/react-dom": "npm:19.0.2"
     "@types/uuid": "npm:^10.0.0"
     astro: "npm:5.0.9"
@@ -679,7 +679,7 @@ __metadata:
     rollup: "npm:^4.24.2"
     rollup-plugin-dts: "npm:^6.1.1"
     sass: "npm:^1.80.4"
-    svelte: "npm:5.14.3"
+    svelte: "npm:5.14.4"
     svelte-check: "npm:^4.0.0"
     tailwindcss: "npm:^3.3.3"
     typescript: "npm:5.6.3"
@@ -689,7 +689,7 @@ __metadata:
     vue-tsc: "npm:^2.0.0"
   peerDependencies:
     "@devprotocol/clubs-core": ^3.22.1
-    "@devprotocol/clubs-plugin-passports": ^0.1.0-beta.33
+    "@devprotocol/clubs-plugin-passports": ^0.1.0-beta.36
     ethers: ^6.0.0
   languageName: unknown
   linkType: soft
@@ -2405,12 +2405,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:19.0.1":
-  version: 19.0.1
-  resolution: "@types/react@npm:19.0.1"
+"@types/react@npm:19.0.2":
+  version: 19.0.2
+  resolution: "@types/react@npm:19.0.2"
   dependencies:
     csstype: "npm:^3.0.2"
-  checksum: 10c0/25eb69114abb9a6d5fc4414ee584388275bbc9ac32976449cf58b95fe9880efe6b3f936c3842be9bed8c571546a9752e8d3e2095288381e9c809269f5f574f2e
+  checksum: 10c0/8992f39701fcf1bf893ef8f94a56196445667baf08fe4f6050a14e229a17aad3265ad3efc01595ff3b4d5d5c69da885f9aa4ff80f164a613018734efcff1eb8f
   languageName: node
   linkType: hard
 
@@ -5167,9 +5167,9 @@ __metadata:
   linkType: hard
 
 "globals@npm:^15.11.0":
-  version: 15.13.0
-  resolution: "globals@npm:15.13.0"
-  checksum: 10c0/640365115ca5f81d91e6a7667f4935021705e61a1a5a76a6ec5c3a5cdf6e53f165af7f9db59b7deb65cf2e1f83d03ac8d6660d0b14c569c831a9b6483eeef585
+  version: 15.14.0
+  resolution: "globals@npm:15.14.0"
+  checksum: 10c0/039deb8648bd373b7940c15df9f96ab7508fe92b31bbd39cbd1c1a740bd26db12457aa3e5d211553b234f30e9b1db2fee3683012f543a01a6942c9062857facb
   languageName: node
   linkType: hard
 
@@ -8826,9 +8826,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"svelte@npm:5.14.3":
-  version: 5.14.3
-  resolution: "svelte@npm:5.14.3"
+"svelte@npm:5.14.4":
+  version: 5.14.4
+  resolution: "svelte@npm:5.14.4"
   dependencies:
     "@ampproject/remapping": "npm:^2.3.0"
     "@jridgewell/sourcemap-codec": "npm:^1.5.0"
@@ -8843,7 +8843,7 @@ __metadata:
     locate-character: "npm:^3.0.0"
     magic-string: "npm:^0.30.11"
     zimmerframe: "npm:^1.1.2"
-  checksum: 10c0/03d0d748dd08e69663479cd3a231e381dc8b82d1175a20cbe47f48e7859f26d26b8572c512a5aeea90873969e70a0187901548fcf08fa038238c0bd843904259
+  checksum: 10c0/c2a7e5bea9bfd1371b1dc0f0f4d28b7893edb8af4c064cb4770bb2cb309fbaddb391179d3eb4388d21d158a73af3711c3340919e43b126e2fdd74d287194269e
   languageName: node
   linkType: hard
 

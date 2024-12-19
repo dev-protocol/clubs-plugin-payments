@@ -24,6 +24,7 @@ import screenshot3 from './images/clubs-payments-3.jpg'
 import Admin from './pages/admin.astro'
 import { get } from './api/payment-key'
 import { post } from './api/fulfillment'
+import type { Override, ComposedItem } from './types'
 
 export const getPagePaths = (async (
   options,
@@ -141,6 +142,8 @@ export const meta = {
   readme: Readme,
   previewImages: [screenshot1.src, screenshot2.src, screenshot3.src],
 } satisfies ClubsPluginMeta
+
+export { type Override, type ComposedItem }
 
 export default {
   getPagePaths,
