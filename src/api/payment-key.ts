@@ -169,7 +169,7 @@ export const get: ({
       )) ??
       new Error('Missing item ID')
 
-    const payloadHex = whenNotError(membership, bytes32Hex)
+    const payloadHex = whenNotError(membership, (m) => bytes32Hex(m.payload))
 
     const sourcePaymentToken = whenNotError(membership, ({ source }) =>
       (source.currency === 'MATIC' && (chainId === 137 || chainId === 80001)) ||
