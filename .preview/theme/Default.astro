@@ -18,7 +18,18 @@ import Connect from './Connect.vue'
           <Connect client:only="vue" slot={ClubsSlotName.ConnectButton} />
         </span>
       </span>
-      <slot />
+      <button id="button">Open dialog</button>
+      <dialog>
+        <div class="p-8 m-auto flex justify-center">
+          <slot />
+        </div>
+      </dialog>
     </main>
   </body>
 </html>
+
+<script>
+  document.getElementById('button')?.addEventListener('click', () => {
+    document.querySelector('dialog')?.showModal()
+  })
+</script>

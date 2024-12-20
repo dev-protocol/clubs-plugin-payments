@@ -102,6 +102,7 @@ const component = useTemplateRef('component')
 const waitingForMinted = ref(false)
 const i18nBase = i18nFactory(Strings)
 const i18n = ref(i18nBase(['en']))
+const dialog = ref<HTMLDialogElement>()
 
 onMounted(async () => {
   i18n.value = i18nBase(navigator.languages)
@@ -110,6 +111,8 @@ onMounted(async () => {
   connection().account.subscribe(async (acc) => {
     account.value = acc
   })
+
+  dialog.value = document.createElement('dialog')
 })
 
 const onError = (msg: string) => {
@@ -155,6 +158,8 @@ const waitForMinted = async () => {
     }, 1000)
   })
 }
+
+const getCCForm = () => document.querySelector('iframe#pop-veritrans')
 
 const clickHandler = async () => {
   const pop = (window as { pop?: any }).pop ?? new Error('Library error')
@@ -213,6 +218,16 @@ const clickHandler = async () => {
     d.status === 'success' ? d.payment_key : new Error(d.message),
   )
 
+  pop.show()
+  const ccForm = getCCForm()
+  whenDefinedAll([dialog.value, ccForm], ([dia, form]) => {
+    if (!document.body.contains(dia)) {
+      document.body.appendChild(dia)
+    }
+    dia.append(form)
+    dia.showModal()
+  })
+
   const pay = await whenNotError(paymentKey, (key) =>
     new Promise<{}>((resolve, reject) => {
       pop.pay(key, {
@@ -238,6 +253,10 @@ const clickHandler = async () => {
       })
     }).catch((err: Error) => err),
   )
+
+  whenDefined(dialog.value, (dia) => {
+    dia.close()
+  })
 
   loading.value = false
 
