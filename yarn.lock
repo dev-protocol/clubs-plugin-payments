@@ -614,9 +614,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@devprotocol/clubs-plugin-passports@npm:0.1.0-beta.36":
-  version: 0.1.0-beta.36
-  resolution: "@devprotocol/clubs-plugin-passports@npm:0.1.0-beta.36"
+"@devprotocol/clubs-plugin-passports@npm:0.1.0-beta.37":
+  version: 0.1.0-beta.37
+  resolution: "@devprotocol/clubs-plugin-passports@npm:0.1.0-beta.37"
   dependencies:
     "@devprotocol/dev-kit": "npm:8.7.0"
     "@devprotocol/util-ts": "npm:4.0.0"
@@ -630,7 +630,7 @@ __metadata:
     "@devprotocol/clubs-core": ^3.18.0
     "@devprotocol/clubs-plugin-payments": ^0.2.3 || ^0.3.0
     ethers: ^6.0.0
-  checksum: 10c0/3b7f211268fdb78441e5fc1c154a6c49adeafddeba10f324fe11f59f25f559cb3ce8efbdaf11db8ba413ab832ad1fb4d6479abcbecfac4d64e2a60415ba48549
+  checksum: 10c0/869de8c4af4a30d95a4e0059cbeba345c0ae7b6bccc978383021d16676b204696d7250417bbe9d86dea0695949ea1687bbad7b812187a9ece3b6a39e5d3fe2ec
   languageName: node
   linkType: hard
 
@@ -643,7 +643,7 @@ __metadata:
     "@astrojs/tailwind": "npm:5.1.3"
     "@astrojs/vue": "npm:5.0.2"
     "@devprotocol/clubs-core": "npm:3.22.6"
-    "@devprotocol/clubs-plugin-passports": "npm:0.1.0-beta.36"
+    "@devprotocol/clubs-plugin-passports": "npm:0.1.0-beta.37"
     "@devprotocol/dev-kit": "npm:8.7.0"
     "@devprotocol/util-ts": "npm:4.0.0"
     "@eslint/js": "npm:^9.13.0"
@@ -678,7 +678,7 @@ __metadata:
     rimraf: "npm:^6.0.1"
     rollup: "npm:^4.24.2"
     rollup-plugin-dts: "npm:^6.1.1"
-    sass: "npm:^1.80.4"
+    sass: "npm:1.83.0"
     svelte: "npm:5.14.5"
     svelte-check: "npm:^4.0.0"
     tailwindcss: "npm:^3.3.3"
@@ -2217,7 +2217,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sveltejs/vite-plugin-svelte-inspector@npm:^4.0.0":
+"@sveltejs/vite-plugin-svelte-inspector@npm:^4.0.1":
   version: 4.0.1
   resolution: "@sveltejs/vite-plugin-svelte-inspector@npm:4.0.1"
   dependencies:
@@ -2231,19 +2231,19 @@ __metadata:
   linkType: hard
 
 "@sveltejs/vite-plugin-svelte@npm:^5.0.1":
-  version: 5.0.1
-  resolution: "@sveltejs/vite-plugin-svelte@npm:5.0.1"
+  version: 5.0.3
+  resolution: "@sveltejs/vite-plugin-svelte@npm:5.0.3"
   dependencies:
-    "@sveltejs/vite-plugin-svelte-inspector": "npm:^4.0.0"
-    debug: "npm:^4.3.7"
+    "@sveltejs/vite-plugin-svelte-inspector": "npm:^4.0.1"
+    debug: "npm:^4.4.0"
     deepmerge: "npm:^4.3.1"
     kleur: "npm:^4.1.5"
-    magic-string: "npm:^0.30.13"
-    vitefu: "npm:^1.0.3"
+    magic-string: "npm:^0.30.15"
+    vitefu: "npm:^1.0.4"
   peerDependencies:
     svelte: ^5.0.0
     vite: ^6.0.0
-  checksum: 10c0/bc0ea707b3f37d05ca953d6be9b75ea651609d73289e7a51f714102c29741825d47eb78c573ccc2766db90794570f432423f0bf8e7e9f755853443ecb8188345
+  checksum: 10c0/e3ad57e164e01c4c67f332901ed438aa83602e6d532ccafb7e35988082de6a2dd1de540b5cd6b879fcb1343e63666c5b0bab5ae691504d52c9e7f3fea691c40c
   languageName: node
   linkType: hard
 
@@ -3912,9 +3912,9 @@ __metadata:
   linkType: hard
 
 "consola@npm:^3.2.3":
-  version: 3.2.3
-  resolution: "consola@npm:3.2.3"
-  checksum: 10c0/c606220524ec88a05bb1baf557e9e0e04a0c08a9c35d7a08652d99de195c4ddcb6572040a7df57a18ff38bbc13ce9880ad032d56630cef27bef72768ef0ac078
+  version: 3.3.0
+  resolution: "consola@npm:3.3.0"
+  checksum: 10c0/78c847200d7f2cb2054a8451e31614da4b8cc8f4da2f2a764465f935509b24c2045b5f5951d788260961f33f7ca112ee1b78a7341fe8c2c617b7bddbdb92e4ec
   languageName: node
   linkType: hard
 
@@ -4053,6 +4053,18 @@ __metadata:
     supports-color:
       optional: true
   checksum: 10c0/1471db19c3b06d485a622d62f65947a19a23fbd0dd73f7fd3eafb697eec5360cde447fb075919987899b1a2096e85d35d4eb5a4de09a57600ac9cf7e6c8e768b
+  languageName: node
+  linkType: hard
+
+"debug@npm:^4.4.0":
+  version: 4.4.0
+  resolution: "debug@npm:4.4.0"
+  dependencies:
+    ms: "npm:^2.1.3"
+  peerDependenciesMeta:
+    supports-color:
+      optional: true
+  checksum: 10c0/db94f1a182bf886f57b4755f85b3a74c39b5114b9377b7ab375dc2cfa3454f09490cc6c30f829df3fc8042bc8b8995f6567ce5cd96f3bc3688bd24027197d9de
   languageName: node
   linkType: hard
 
@@ -6393,12 +6405,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"magic-string@npm:^0.30.13, magic-string@npm:^0.30.14":
+"magic-string@npm:^0.30.14":
   version: 0.30.14
   resolution: "magic-string@npm:0.30.14"
   dependencies:
     "@jridgewell/sourcemap-codec": "npm:^1.5.0"
   checksum: 10c0/c52c2a6e699dfa8a840e13154da35464a40cd8b07049b695a8b282883b0426c0811af1e36ac26860b4267289340b42772c156a5608e87be97b63d510e617e87a
+  languageName: node
+  linkType: hard
+
+"magic-string@npm:^0.30.15":
+  version: 0.30.17
+  resolution: "magic-string@npm:0.30.17"
+  dependencies:
+    "@jridgewell/sourcemap-codec": "npm:^1.5.0"
+  checksum: 10c0/16826e415d04b88378f200fe022b53e638e3838b9e496edda6c0e086d7753a44a6ed187adc72d19f3623810589bf139af1a315541cd6a26ae0771a0193eaf7b8
   languageName: node
   linkType: hard
 
@@ -8582,7 +8603,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sass@npm:1.83.0, sass@npm:^1.80.4":
+"sass@npm:1.83.0":
   version: 1.83.0
   resolution: "sass@npm:1.83.0"
   dependencies:
@@ -9621,8 +9642,8 @@ __metadata:
   linkType: hard
 
 "unstorage@npm:^1.14.0":
-  version: 1.14.0
-  resolution: "unstorage@npm:1.14.0"
+  version: 1.14.1
+  resolution: "unstorage@npm:1.14.1"
   dependencies:
     anymatch: "npm:^3.1.3"
     chokidar: "npm:^3.6.0"
@@ -9690,7 +9711,7 @@ __metadata:
       optional: true
     uploadthing:
       optional: true
-  checksum: 10c0/58d2d28c5c057b35dd6a87492d2b2c9166a27d772559d5e55e9d2b996636ad108eabe960350a8e9346ecba4d210bf8495d463e41da04698e2292c7e637bc43ec
+  checksum: 10c0/35d0b1f94437709ed90288109cb07251161a852883f4d53a3ca2039caaba2f5579302a37747f74e2f5ee63add547426c5a868258e293bb0eddde3fb7d3544e01
   languageName: node
   linkType: hard
 
@@ -9900,8 +9921,8 @@ __metadata:
   linkType: hard
 
 "vite@npm:^6.0.1":
-  version: 6.0.2
-  resolution: "vite@npm:6.0.2"
+  version: 6.0.4
+  resolution: "vite@npm:6.0.4"
   dependencies:
     esbuild: "npm:^0.24.0"
     fsevents: "npm:~2.3.3"
@@ -9947,19 +9968,7 @@ __metadata:
       optional: true
   bin:
     vite: bin/vite.js
-  checksum: 10c0/45fc609f2bc5fb5beb5a8e2cad9ad6c2edce229a922f6fc1270ea2a9d75819482edcc0f77c85b4a7abdad7eb69ce6a4f26131925d47cdc0778fc15d1bbc3b6a2
-  languageName: node
-  linkType: hard
-
-"vitefu@npm:^1.0.3":
-  version: 1.0.3
-  resolution: "vitefu@npm:1.0.3"
-  peerDependencies:
-    vite: ^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0-beta.0
-  peerDependenciesMeta:
-    vite:
-      optional: true
-  checksum: 10c0/0b41021767885d538d04bb0cdabd140a5397a780997533a3cc1a1ea3c0ffae0cac4bde3e67632440587cd0505c0b6e825dfd8ab7da6249a68076072bea6eada1
+  checksum: 10c0/b1808f99250980bb1dc7805897ecfced4913adc7b4fd1cf7912e034f3e24e3e97a751ca3410620428bf073070f0b46071b94c4241cf9fc88b12f2d9dcafd7619
   languageName: node
   linkType: hard
 

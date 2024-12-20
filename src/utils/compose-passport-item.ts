@@ -1,7 +1,7 @@
 import { createClient } from 'redis'
 import type { ComposedItem } from '../types'
 import { ClubsConfiguration } from '@devprotocol/clubs-core'
-import { checkoutPassportItemForPayload } from '@devprotocol/clubs-plugin-passports'
+import { checkoutPassportItemForPayload } from '@devprotocol/clubs-plugin-passports/utils'
 import { UndefinedOr, whenDefinedAll } from '@devprotocol/util-ts'
 
 export const composePassportItem = async (
