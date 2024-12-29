@@ -99,5 +99,5 @@
   "repository": "https://github.com/dev-protocol/clubs-plugin-payments.git",
   "author": "",
   "license": "PolyForm Perimeter License 1.0.0",
-  "packageManager": "yarn@4.5.3"
+  "packageManager": "yarn@4.6.0"
 }
