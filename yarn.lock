@@ -679,7 +679,7 @@ __metadata:
     rimraf: "npm:^6.0.1"
     rollup: "npm:^4.24.2"
     rollup-plugin-dts: "npm:^6.1.1"
-    sass: "npm:1.83.0"
+    sass: "npm:1.83.1"
     svelte: "npm:5.16.0"
     svelte-check: "npm:^4.0.0"
     tailwindcss: "npm:^3.3.3"
@@ -8635,23 +8635,6 @@ __metadata:
   dependencies:
     suf-log: "npm:^2.5.3"
   checksum: 10c0/172eb326121ace1a48e689a1419efab2d780623631d106ac306ac2a055e96813bda36044f20bc4cc28d761427efc136a08d07153d1b8a8ccf0a032dca5fdce3c
-  languageName: node
-  linkType: hard
-
-"sass@npm:1.83.0":
-  version: 1.83.0
-  resolution: "sass@npm:1.83.0"
-  dependencies:
-    "@parcel/watcher": "npm:^2.4.1"
-    chokidar: "npm:^4.0.0"
-    immutable: "npm:^5.0.2"
-    source-map-js: "npm:>=0.6.2 <2.0.0"
-  dependenciesMeta:
-    "@parcel/watcher":
-      optional: true
-  bin:
-    sass: sass.js
-  checksum: 10c0/4415361229879a9041d77c953da85482e89032aa4321ba13250a9987d39c80fac6c88af3777f2a2d76a4e8b0c8afbd21c1970fdbe84e0b3ec25fb26741f92beb
   languageName: node
   linkType: hard
 
