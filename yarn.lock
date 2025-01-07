@@ -680,7 +680,7 @@ __metadata:
     rollup: "npm:^4.24.2"
     rollup-plugin-dts: "npm:^6.1.1"
     sass: "npm:1.83.1"
-    svelte: "npm:5.16.0"
+    svelte: "npm:5.16.5"
     svelte-check: "npm:^4.0.0"
     tailwindcss: "npm:^3.3.3"
     typescript: "npm:5.7.2"
@@ -9105,9 +9105,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"svelte@npm:5.16.0":
-  version: 5.16.0
-  resolution: "svelte@npm:5.16.0"
+"svelte@npm:5.16.5":
+  version: 5.16.5
+  resolution: "svelte@npm:5.16.5"
   dependencies:
     "@ampproject/remapping": "npm:^2.3.0"
     "@jridgewell/sourcemap-codec": "npm:^1.5.0"
@@ -9123,7 +9123,7 @@ __metadata:
     locate-character: "npm:^3.0.0"
     magic-string: "npm:^0.30.11"
     zimmerframe: "npm:^1.1.2"
-  checksum: 10c0/ce8cbde908684bbac6a8b560982c5a2aaf532c295f43f5cd7ee6912f600030a9e610876aa064c8def608d11997e01adb749161226bb9ecd00705803b06ecdd34
+  checksum: 10c0/a847102f37c0e83862ddc8c91143ea6efc2d8d6cd467b123a2eb8db5ec0a20dde0e532d07ea0033b07c7af0a28f93792c91bc81968359c5293307ab76cf45eac
   languageName: node
   linkType: hard
 
