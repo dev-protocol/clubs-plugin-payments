@@ -658,7 +658,7 @@ __metadata:
     "@types/react": "npm:19.0.6"
     "@types/react-dom": "npm:19.0.3"
     "@types/uuid": "npm:^10.0.0"
-    astro: "npm:5.1.5"
+    astro: "npm:5.1.6"
     bignumber.js: "npm:9.1.2"
     cross-fetch: "npm:^4.0.0"
     crypto-hash: "npm:^3.0.0"
@@ -3368,9 +3368,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"astro@npm:5.1.5":
-  version: 5.1.5
-  resolution: "astro@npm:5.1.5"
+"astro@npm:5.1.6":
+  version: 5.1.6
+  resolution: "astro@npm:5.1.6"
   dependencies:
     "@astrojs/compiler": "npm:^2.10.3"
     "@astrojs/internal-helpers": "npm:0.4.2"
@@ -3437,7 +3437,7 @@ __metadata:
       optional: true
   bin:
     astro: astro.js
-  checksum: 10c0/17ddefb49c4e2d971a22fc290bcd491ab0678fa004daa96dc216620e30ae869d32585a91e127a1ec3a21497168afce46f6d4742fa8d6a0a458e3e7b402d8a34c
+  checksum: 10c0/2f3071e8f61e1925f2d4485da77fef56eb2692a353af39f485786c17046728bb6c884c23efd2c62090602e4153d991721fb9efc5fdd17702a5bd46e4ac01f3c2
   languageName: node
   linkType: hard
 
