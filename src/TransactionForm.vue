@@ -43,7 +43,7 @@
       >
         <IconBouncingArrowRight
           v-if="!loading"
-          justifyLeft="true"
+          :justifyLeft="true"
           class="group-disabled:hidden"
         />
         <IconSpinner v-if="loading" class="absolute left-5 size-5" />
@@ -91,6 +91,7 @@ const props = defineProps<{
   chainId: number
   rpcUrl: string
   debugMode: boolean
+  base: string
 }>()
 
 const account = ref<string | undefined>(undefined)
@@ -189,8 +190,7 @@ const clickHandler = async () => {
     params,
     ({ payload, account, customerName, customerEmail, dummy }) => {
       const url = new URL(
-        '/api/devprotocol:clubs:plugin:clubs-payments/payment-key',
-        location.origin,
+        `${props.base}/api/devprotocol:clubs:plugin:clubs-payments/payment-key`,
       )
       url.searchParams.set('payload', bytes32Hex(payload))
       url.searchParams.set('eoa', account)

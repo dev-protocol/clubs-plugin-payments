@@ -7,13 +7,14 @@ import { i18nFactory } from '@devprotocol/clubs-core'
 import { Strings } from './i18n'
 import LoadLibrary from './components/LoadLibrary.astro'
 
-const { item, propertyAddress, rpcUrl, chainId, debugMode, ...other } =
+const { item, propertyAddress, rpcUrl, chainId, debugMode, base, ...other } =
   Astro.props as ClubsPropsPages & {
     item: ComposedItem
     propertyAddress: string
     rpcUrl: string
     chainId: number
     debugMode: boolean
+    base: string
   }
 
 const i18nBase = i18nFactory(Strings)
@@ -50,6 +51,7 @@ const { PUBLIC_POP_CLIENT_KEY } = import.meta.env
       chainId={chainId}
       rpcUrl={rpcUrl}
       debugMode={debugMode}
+      base={base}
     />
   </div>
   <div slot="checkout:after:transaction-form" class="p-3">

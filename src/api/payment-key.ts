@@ -24,7 +24,6 @@ import {
   type ClubsConfiguration,
   getTokenAddress,
 } from '@devprotocol/clubs-core'
-import { replaceWithFwdHost } from '../fixtures/url'
 import { composePassportItem } from '../utils/compose-passport-item'
 
 const { POP_SERVER_KEY, REDIS_URL, REDIS_USERNAME, REDIS_PASSWORD } =
@@ -132,7 +131,7 @@ export const get: ({
   items: ComposedItem[]
 }) => APIRoute =
   ({ config, propertyAddress, chainId, items: _items }) =>
-  async ({ url, request }) => {
+  async ({ url }) => {
     /**
      * Get request parameters.
      */
@@ -217,10 +216,8 @@ export const get: ({
     const order_id = `ORDER-${keccak256(orderUniqueKey)}`
     const gross_amount = whenNotError(membership, ({ price }) => price.yen)
     const payment_key_expiry_duration = 1440 // = 1440 minutes
-    const currentUrl = replaceWithFwdHost(request)
     const push_destination = new URL(
-      `/api/devprotocol:clubs:plugin:clubs-payments/fulfillment`,
-      new URL(currentUrl).origin.replace('http:', 'https:'),
+      `${config.url}/api/devprotocol:clubs:plugin:clubs-payments/fulfillment`,
     ).toString()
 
     const paramsSaved = await whenNotErrorAll(

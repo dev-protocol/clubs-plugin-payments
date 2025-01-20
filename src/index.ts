@@ -28,7 +28,7 @@ import type { Override, ComposedItem } from './types'
 
 export const getPagePaths = (async (
   options,
-  { propertyAddress, rpcUrl, chainId, offerings },
+  { propertyAddress, rpcUrl, chainId, offerings, url },
   utils,
 ) => {
   const items = composeItems(options, utils, offerings)
@@ -47,6 +47,7 @@ export const getPagePaths = (async (
             accessControlUrl: item.source.accessControl?.url,
             accessControlDescription: item.source.accessControl?.description,
             debugMode,
+            base: url,
           },
           component: Id,
         })),
