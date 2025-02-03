@@ -195,10 +195,12 @@ export const get: ({
         sourcePaymentToken,
         amount,
         mem.source.fee?.beneficiary ?? ZeroAddress,
-        new BigNumber(amount.toString())
-          .times(mem.source.fee?.percentage ?? 0)
-          .dp(0, 1)
-          .toFixed(),
+        mem.source.price
+          ? new BigNumber(amount.toString())
+              .times(mem.source.fee?.percentage ?? 0)
+              .dp(0, 1)
+              .toFixed()
+          : MaxUint256,
       ]
     })
     const abiEncodedParamsForFulfilment = whenNotError(abiParams, (_params) =>
