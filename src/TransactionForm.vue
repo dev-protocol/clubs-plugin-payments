@@ -60,10 +60,14 @@
 
     <span
       v-if="waitingForMinted"
-      class="flex items-center justify-center gap-6"
+      class="fixed inset-0 flex items-center justify-center bg-black/30"
     >
-      <IconSpinner />
-      <p>Just a few minutes until your item is minted...</p>
+      <span
+        class="flex flex-col items-center justify-center gap-2 rounded-2xl bg-white p-4 size-52 shadow"
+      >
+        <video :src="PosMp4" autoplay loop muted playsinline class="size-32" />
+        <p class="text-sm text-black/50">{{ i18n('Waiting') }}</p>
+      </span>
     </span>
   </span>
 </template>
@@ -80,11 +84,9 @@ import {
   i18nFactory,
   mintedIdByLogs,
 } from '@devprotocol/clubs-core'
-import {
-  IconBouncingArrowRight,
-  IconSpinner,
-} from '@devprotocol/clubs-core/ui/vue'
+import { IconBouncingArrowRight } from '@devprotocol/clubs-core/ui/vue'
 import { Strings } from './i18n'
+import PosMp4 from './images/pos-terminal.mp4'
 
 const props = defineProps<{
   item: ComposedItem
@@ -114,6 +116,9 @@ onMounted(async () => {
   })
 
   dialog.value = document.createElement('dialog')
+  setTimeout(() => {
+    waitingForMinted.value = true
+  }, 1000)
 })
 
 const onError = (msg: string) => {
@@ -156,7 +161,7 @@ const waitForMinted = async () => {
         clearInterval(polling)
         return res(result)
       }
-    }, 1000)
+    }, 500)
   })
 }
 

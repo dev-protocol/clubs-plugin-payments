@@ -14,4 +14,8 @@ export const Strings = {
     en: 'YEN',
     ja: '円',
   },
+  Waiting: {
+    en: 'Please wait until the purchase is complete.',
+    ja: '購入が完了するまでお待ちください。',
+  },
 } satisfies ClubsI18nParts
