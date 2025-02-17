@@ -116,9 +116,6 @@ onMounted(async () => {
   })
 
   dialog.value = document.createElement('dialog')
-  setTimeout(() => {
-    waitingForMinted.value = true
-  }, 1000)
 })
 
 const onError = (msg: string) => {
