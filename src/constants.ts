@@ -1,5 +1,5 @@
 export const LibraryPath =
-  'https://pay.veritrans.co.jp/pop/v1/javascripts/pop.js'
+  'https://pay3.veritrans.co.jp/pop/v1/javascripts/pop.js'
 
 export const abi = [
   'address _mintFor',

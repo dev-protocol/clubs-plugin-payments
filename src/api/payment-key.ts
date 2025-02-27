@@ -274,7 +274,7 @@ export const get: ({
      *
      */
     const paymentKey = await whenNotError(options, (opts) =>
-      fetch('https://pay.veritrans.co.jp/pop/v1/payment-key', {
+      fetch('https://pay3.veritrans.co.jp/pop/v1/payment-key', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json; charset=utf-8',
