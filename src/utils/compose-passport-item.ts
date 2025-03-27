@@ -22,7 +22,7 @@ export const composePassportItem = async (
     [
       passportItem,
       passportItem?.props.discount?.price.yen ??
-        passportItem?.props.fiat.price.yen,
+        passportItem?.props.fiat?.price.yen,
     ],
     ([item, yen]) => ({
       payload,
