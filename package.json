@@ -44,7 +44,7 @@
     "@astrojs/tailwind": "6.0.2",
     "@astrojs/vue": "5.0.9",
     "@devprotocol/clubs-core": "3.26.6",
-    "@devprotocol/clubs-plugin-passports": "0.6.0",
+    "@devprotocol/clubs-plugin-passports": "0.6.1",
     "@eslint/js": "^9.13.0",
     "@rollup/plugin-typescript": "^12.1.1",
     "@tailwindcss/typography": "^0.5.15",
