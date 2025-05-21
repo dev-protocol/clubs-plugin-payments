@@ -51,7 +51,7 @@
     "@types/dotenv": "8.2.3",
     "@types/eslint__js": "^9.0.0",
     "@types/node": "^22.0.0",
-    "@types/react": "19.1.4",
+    "@types/react": "19.1.5",
     "@types/react-dom": "19.1.5",
     "@types/uuid": "^10.0.0",
     "astro": "5.7.13",
