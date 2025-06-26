@@ -71,7 +71,7 @@
     "sass": "1.89.2",
     "svelte": "5.34.8",
     "svelte-check": "^4.0.0",
-    "tailwindcss": "4.1.10",
+    "tailwindcss": "4.1.11",
     "typescript": "5.8.3",
     "typescript-eslint": "^8.11.0",
     "vitest": "1.6.1",
