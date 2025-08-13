@@ -29,6 +29,7 @@ import { PluginId } from './constants'
 import { addCartHandler } from './api/add-cart'
 import { generateScopeBy } from './utils'
 import { getCartHandler } from './api/get-cart'
+import { getPaymentKeyByCart } from './api/payment-key-cart'
 
 export const getPagePaths = (async (
   options,
@@ -74,19 +75,26 @@ export const getAdminPaths = (async (options, { name, offerings }, utils) => {
 }) satisfies ClubsFunctionGetAdminPaths
 
 export const getApiPaths = (async (options, config, utils) => {
-  const { propertyAddress, chainId, rpcUrl, offerings } = config
+  const { propertyAddress, chainId, rpcUrl, offerings: _offerings } = config
+  const offerings = [...(_offerings ?? [])]
   const items = composeItems(options, utils, offerings)
   const webhooks =
     (options.find((opt) => opt.key === 'webhooks')?.value as UndefinedOr<{
       fulfillment?: { encrypted: string }
     }>) ?? {}
   const scope = generateScopeBy(config.url)
+  const orderPrefix = new URL(config.url).host
 
   return [
     {
       paths: ['payment-key'],
       method: 'GET',
       handler: get({ config, items, propertyAddress, chainId }),
+    },
+    {
+      paths: ['payment-key', 'cart'],
+      method: 'GET',
+      handler: getPaymentKeyByCart({ config, scope, orderPrefix, offerings }),
     },
     {
       paths: ['fulfillment'],
@@ -109,7 +117,7 @@ export const getApiPaths = (async (options, config, utils) => {
       method: 'POST',
       handler: addCartHandler({
         scope,
-        offerings: [...(offerings ?? [])],
+        offerings,
       }),
     },
   ]

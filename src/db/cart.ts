@@ -15,7 +15,7 @@ export const getCart = async ({
   scope: string
   eoa: string
   from?: number
-  size?: number
+  size?: number | '+inf'
 }) => {
   const client = await withCheckingIndex(Redis.client)
   const search = await whenNotError(client, (redis) =>
