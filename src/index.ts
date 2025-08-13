@@ -25,6 +25,10 @@ import Admin from './pages/admin.astro'
 import { get } from './api/payment-key'
 import { post } from './api/fulfillment'
 import type { Override, ComposedItem } from './types'
+import { PluginId } from './constants'
+import { addCartHandler } from './api/add-cart'
+import { generateScopeBy } from './utils'
+import { getCartHandler } from './api/get-cart'
 
 export const getPagePaths = (async (
   options,
@@ -76,6 +80,7 @@ export const getApiPaths = (async (options, config, utils) => {
     (options.find((opt) => opt.key === 'webhooks')?.value as UndefinedOr<{
       fulfillment?: { encrypted: string }
     }>) ?? {}
+  const scope = generateScopeBy(config.url)
 
   return [
     {
@@ -90,6 +95,21 @@ export const getApiPaths = (async (options, config, utils) => {
         webhookOnFulfillment: webhooks?.fulfillment?.encrypted,
         chainId,
         rpcUrl,
+      }),
+    },
+    {
+      paths: ['cart'],
+      method: 'GET',
+      handler: getCartHandler({
+        scope,
+      }),
+    },
+    {
+      paths: ['cart'],
+      method: 'POST',
+      handler: addCartHandler({
+        scope,
+        offerings: [...(offerings ?? [])],
       }),
     },
   ]
@@ -135,7 +155,7 @@ export const getSlots = (async (options, { offerings }, utils) => {
 }) satisfies ClubsFunctionGetSlots
 
 export const meta = {
-  id: 'devprotocol:clubs:plugin:clubs-payments',
+  id: PluginId,
   displayName: 'Clubs Payments',
   category: ClubsPluginCategory.Monetization,
   icon: Icon.src,

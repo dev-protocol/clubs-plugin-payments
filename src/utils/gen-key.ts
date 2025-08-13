@@ -1,4 +1,4 @@
-import { meta } from '..'
+import { PluginId } from '../constants'
 
 export const generateFulFillmentParamsId = (orderId: string) =>
-  `${meta.id}:order:params:${orderId}`
+  `${PluginId}:order:params:${orderId}`

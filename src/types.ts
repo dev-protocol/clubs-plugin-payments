@@ -29,4 +29,11 @@ export type Override = {
   }
 }
 
+export type CartItem = {
+  scope: string
+  eoa: string
+  payload: string
+  quantity: number
+}
+
 export type ComposedItem = Override & { source: Membership }
