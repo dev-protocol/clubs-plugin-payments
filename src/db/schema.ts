@@ -31,6 +31,13 @@ export const quantity = {
   },
 } satisfies RediSearchSchema
 
+export const session = {
+  '$.session': {
+    type: SchemaFieldTypes.TAG,
+    AS: 'session',
+  },
+} satisfies RediSearchSchema
+
 export const status = {
   '$.status': {
     type: SchemaFieldTypes.TAG,
@@ -65,6 +72,7 @@ export const CARTITEM_SCHEMA = {
   ...payload,
   ...quantity,
   ...status,
+  ...session,
   ...group,
   ...order_id,
   ...ordered_at,

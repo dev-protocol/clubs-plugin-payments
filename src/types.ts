@@ -40,6 +40,7 @@ export type CartItem = {
   quantity: number
   group?: string
   status?: CartItemStatus
+  session: string
   order_id?: string
   ordered_at?: number
 }

@@ -1,5 +1,5 @@
 import { Redis } from '@devprotocol/clubs-core/redis'
-import { hexlify, randomBytes } from 'ethers'
+import { randomHash } from '../../utils/hash'
 
 export const CLUBSX_ASSET_IDX = 'idx::clubs:asset'
 export const CLUBSX_ASSET_PREFIX_DOC = 'doc::clubs:asset'
@@ -25,7 +25,7 @@ export const assetDocument = ({
   ({
     type,
     contract,
-    id: `pre-${id ?? hexlify(randomBytes(8)).slice(2)}`,
+    id: `pre-${id ?? randomHash(8)}`,
     owner,
     balance: '1',
     propertyAddress,

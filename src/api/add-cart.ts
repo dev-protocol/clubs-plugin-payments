@@ -8,7 +8,8 @@ import {
 import { bytes32Hex, ClubsOffering } from '@devprotocol/clubs-core'
 import { verify } from '../utils/account'
 import { CartItem } from '../types'
-import { updateCart } from '../db/cart'
+import { getCartItem, getLatestSession, updateCart } from '../db/cart'
+import { headers } from '../fixtures/url/json'
 
 /**
  * Update the cart with the given offerings.
@@ -65,14 +66,25 @@ export const addCartHandler: ({
         ) ?? new Error('Offering not found'),
     )
 
+    const session = await whenNotError(eoa, (user) =>
+      getLatestSession({ scope, eoa: user }).catch((err) => new Error(err)),
+    )
+
+    const existingItem = await whenNotErrorAll(
+      [props, eoa, session],
+      ([{ payload }, _eoa, _session]) =>
+        getCartItem({ scope, eoa: _eoa, payload, session: _session }),
+    )
+
     const item = whenNotErrorAll(
-      [eoa, props, exists],
-      ([_eoa, _props]) =>
+      [eoa, props, existingItem, session, exists],
+      ([_eoa, _props, _existingItem, _session]) =>
         ({
           scope,
           eoa: _eoa,
           payload: _props.payload,
-          quantity: _props.quantity,
+          quantity: _props.quantity + (_existingItem?.quantity ?? 0),
+          session: _session,
         }) satisfies CartItem,
     )
 
@@ -85,7 +97,10 @@ export const addCartHandler: ({
           JSON.stringify({
             error: result.message,
           }),
-          { status: 400 },
+          { status: 400, headers: headers() },
         )
-      : new Response(JSON.stringify({ data: result }), { status: 200 })
+      : new Response(JSON.stringify({ data: result }), {
+          status: 200,
+          headers: headers(),
+        })
   }

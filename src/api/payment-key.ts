@@ -26,6 +26,7 @@ import {
   getTokenAddress,
 } from '@devprotocol/clubs-core'
 import { composePassportItem } from '../utils/compose-passport-item'
+import { headers } from '../fixtures/url/json'
 
 const { POP_SERVER_KEY, REDIS_URL, REDIS_USERNAME, REDIS_PASSWORD } =
   import.meta.env
@@ -148,9 +149,9 @@ export const callNRes = async (options: ErrorOr<PaymentKeyOptions>) => {
           status: 'failure',
           message: result.message,
         }),
-        { status: 400 },
+        { status: 400, headers: headers() },
       )
-    : new Response(JSON.stringify(result), { status: 200 })
+    : new Response(JSON.stringify(result), { status: 200, headers: headers() })
 }
 
 /**

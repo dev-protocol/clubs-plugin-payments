@@ -6,6 +6,7 @@ import {
 } from '@devprotocol/util-ts'
 import { verify } from '../utils/account'
 import { getOrders } from '../db/cart'
+import { headers } from '../fixtures/url/json'
 
 /**
  * Get orders for a specific user
@@ -40,8 +41,6 @@ export const getOrdersHandler: ({
         scope,
         eoa: _eoa,
         orderId,
-        from: '-inf',
-        size: '+inf',
       }).catch((err) => new Error(err)),
     )
 
@@ -52,7 +51,10 @@ export const getOrdersHandler: ({
           JSON.stringify({
             error: result.message,
           }),
-          { status: 400 },
+          { status: 400, headers: headers() },
         )
-      : new Response(JSON.stringify(result), { status: 200 })
+      : new Response(JSON.stringify(result), {
+          status: 200,
+          headers: headers(),
+        })
   }

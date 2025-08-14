@@ -5,6 +5,7 @@ import { getCart } from '../db/cart'
 import { checkoutPassportItemForPayload } from '@devprotocol/clubs-plugin-passports'
 import { Redis } from '@devprotocol/clubs-core/redis'
 import type { ClubsConfiguration } from '@devprotocol/clubs-core'
+import { headers } from '../fixtures/url/json'
 
 /**
  * Get the cart for the given scope.
@@ -33,9 +34,7 @@ export const getCartHandler: ({
     )
 
     const cart = await whenNotError(eoa, (_eoa) =>
-      getCart({ scope, eoa: _eoa, from: '-inf', size: '+inf' }).catch(
-        (err) => new Error(err),
-      ),
+      getCart({ scope, eoa: _eoa }).catch((err) => new Error(err)),
     )
 
     const result = await whenNotError(cart, async ({ total, data: _data }) => {
@@ -59,7 +58,10 @@ export const getCartHandler: ({
           JSON.stringify({
             error: result.message,
           }),
-          { status: 400 },
+          { status: 400, headers: headers() },
         )
-      : new Response(JSON.stringify(result), { status: 200 })
+      : new Response(JSON.stringify(result), {
+          status: 200,
+          headers: headers(),
+        })
   }

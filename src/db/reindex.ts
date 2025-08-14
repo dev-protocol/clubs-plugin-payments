@@ -43,7 +43,7 @@ export const reindex = async (
             })
             .catch((err: Error) => {
               console.log(`### Error dropping old index: ${Index.Cart}`, err)
-              return err
+              return true
             })
         : false
     },

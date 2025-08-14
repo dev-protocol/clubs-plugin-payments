@@ -1,5 +1,4 @@
 import type { APIRoute } from 'astro'
-import { hexlify, randomBytes } from 'ethers'
 import { whenNotError, whenNotErrorAll } from '@devprotocol/util-ts'
 import {
   bytes32Hex,
@@ -12,6 +11,7 @@ import { Redis } from '@devprotocol/clubs-core/redis'
 import { verify } from '../utils/account'
 import { getCart } from '../db/cart'
 import { generateFulFillmentCartParamsId } from '../utils/gen-key'
+import { randomHash } from '../utils/hash'
 
 /**
  * This endpoint is expected to be called with the following parameters:
@@ -50,7 +50,7 @@ export const getPaymentKeyByCart: ({
     )
 
     const cart = await whenNotError(eoa, (_eoa) =>
-      getCart({ scope, eoa: _eoa, from: 0, size: '+inf' }),
+      getCart({ scope, eoa: _eoa }),
     )
 
     const offeringItems = await whenNotError(cart, async (_cart) => {
@@ -75,8 +75,7 @@ export const getPaymentKeyByCart: ({
 
     const order_id = whenNotErrorAll(
       [shortEoa],
-      ([_shortEoa]) =>
-        `ORDER-${orderPrefix}-${_shortEoa}-${hexlify(randomBytes(3))}`,
+      ([_shortEoa]) => `ORDER-${orderPrefix}-${_shortEoa}-${randomHash(3)}`,
     )
     const gross_amount = whenNotError(offeringItems, (_items) =>
       _items.reduce(
