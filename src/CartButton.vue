@@ -33,6 +33,7 @@ import { IconBouncingArrowRight } from '@devprotocol/clubs-core/ui/vue'
 const props = defineProps<{
   payload: ClubsOffering['payload']
   quantity?: number
+  onComplete: () => void | Promise<() => void>
   base: string
 }>()
 
@@ -69,6 +70,9 @@ const onClick = async () => {
   )
   error.value = err
   loading.value = false
+  if (!err) {
+    props.onComplete()
+  }
 }
 
 onMounted(async () => {
