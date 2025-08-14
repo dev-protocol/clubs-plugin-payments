@@ -1,4 +1,4 @@
-import { Redis } from '@devprotocol/clubs-core/redis'
+import { escapeTag, Redis } from '@devprotocol/clubs-core/redis'
 import { Index } from './prefix'
 import { CARTITEM_SCHEMA } from './schema'
 import { CartItem, CartItemStatus } from '../types'
@@ -22,6 +22,36 @@ export const getCart = async ({
     redis.ft.search(
       Index.Cart,
       `@${CARTITEM_SCHEMA['$.scope'].AS}:{${scope}} @{${CARTITEM_SCHEMA['$.eoa'].AS}:{${eoa}}} -@{${CARTITEM_SCHEMA['$.status'].AS}:{${CartItemStatus.Completed}}}`,
+      {
+        LIMIT: { from, size },
+      },
+    ),
+  )
+  const res = whenNotError(search, (res) => ({
+    total: res.total,
+    data: res.documents.map((doc) => doc.value as unknown as CartItem),
+  }))
+  return res
+}
+
+export const getOrders = async ({
+  scope,
+  eoa,
+  orderId,
+  from = 0,
+  size = 900,
+}: {
+  readonly scope: string
+  readonly eoa: string
+  readonly orderId: string
+  readonly from?: number | '-inf'
+  readonly size?: number | '+inf'
+}) => {
+  const client = await withCheckingIndex(Redis.client)
+  const search = await whenNotError(client, (redis) =>
+    redis.ft.search(
+      Index.Cart,
+      `@${CARTITEM_SCHEMA['$.scope'].AS}:{${scope}} @{${CARTITEM_SCHEMA['$.eoa'].AS}:{${eoa}}} @{${CARTITEM_SCHEMA['$.order_id'].AS}:{${escapeTag(orderId)}}}`,
       {
         LIMIT: { from, size },
       },

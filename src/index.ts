@@ -30,6 +30,7 @@ import { addCartHandler } from './api/add-cart'
 import { generateScopeBy } from './utils'
 import { getCartHandler } from './api/get-cart'
 import { getPaymentKeyByCart } from './api/payment-cart-key'
+import { getOrdersHandler } from './api/get-orders'
 
 export const getPagePaths = (async (
   options,
@@ -131,6 +132,13 @@ export const getApiPaths = (async (options, config, utils) => {
       handler: addCartHandler({
         scope,
         offerings,
+      }),
+    },
+    {
+      paths: ['orders'],
+      method: 'GET',
+      handler: getOrdersHandler({
+        scope,
       }),
     },
   ]

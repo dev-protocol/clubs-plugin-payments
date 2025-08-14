@@ -37,6 +37,10 @@ export type Success = {
   status: 'success'
   message: string //'"Payment Key" has been generated successfully'
   payment_key_expiry_time: string //'20200401000000'
+  _clubs: {
+    // Injected by CLUBS
+    order_id: string // 'ORDER-<UUID>'
+  }
 }
 
 export type Failure = {
@@ -128,11 +132,13 @@ export const callNRes = async (options: ErrorOr<PaymentKeyOptions>) => {
     }).catch((err) => new Error(err)),
   )
 
-  const result = await whenNotError(paymentKey, (res) =>
-    res
-      .text()
-      .then((x) => x as string)
-      .catch((err) => new Error(err)),
+  const result = await whenNotErrorAll(
+    [paymentKey, options],
+    ([res, { order_id }]) =>
+      res
+        .json()
+        .then((x) => ({ ...x, _clubs: { order_id } }) as Success)
+        .catch((err) => new Error(err)),
   )
 
   return result instanceof Error
@@ -144,7 +150,7 @@ export const callNRes = async (options: ErrorOr<PaymentKeyOptions>) => {
         }),
         { status: 400 },
       )
-    : new Response(result, { status: 200 })
+    : new Response(JSON.stringify(result), { status: 200 })
 }
 
 /**
