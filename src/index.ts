@@ -29,7 +29,7 @@ import { PluginId } from './constants'
 import { addCartHandler } from './api/add-cart'
 import { generateScopeBy } from './utils'
 import { getCartHandler } from './api/get-cart'
-import { getPaymentKeyByCart } from './api/payment-key-cart'
+import { getPaymentKeyByCart } from './api/payment-cart-key'
 
 export const getPagePaths = (async (
   options,
@@ -106,10 +106,23 @@ export const getApiPaths = (async (options, config, utils) => {
       }),
     },
     {
+      paths: ['fulfillment', 'cart'],
+      method: 'POST',
+      handler: post({
+        cart: true,
+        scope,
+        propertyAddress,
+        webhookOnFulfillment: webhooks?.fulfillment?.encrypted,
+        chainId,
+        rpcUrl,
+      }),
+    },
+    {
       paths: ['cart'],
       method: 'GET',
       handler: getCartHandler({
         scope,
+        config,
       }),
     },
     {

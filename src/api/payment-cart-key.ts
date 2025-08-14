@@ -11,6 +11,7 @@ import { callNRes, PaymentKeyOptions, PaymentTypes } from './payment-key'
 import { Redis } from '@devprotocol/clubs-core/redis'
 import { verify } from '../utils/account'
 import { getCart } from '../db/cart'
+import { generateFulFillmentCartParamsId } from '../utils/gen-key'
 
 /**
  * This endpoint is expected to be called with the following parameters:
@@ -84,9 +85,17 @@ export const getPaymentKeyByCart: ({
       ),
     )
     const payment_key_expiry_duration = 1440 // = 1440 minutes
-    const push_url = new URL(
-      `${config.url}/api/devprotocol:clubs:plugin:clubs-payments/fulfillment`,
+    const push_destination = new URL(
+      `${config.url}/api/devprotocol:clubs:plugin:clubs-payments/fulfillment/cart`,
     ).toString()
+
+    const paramsSaved = await whenNotErrorAll(
+      [client, eoa, order_id],
+      ([db, _eoa, _order_id]) =>
+        db.set(generateFulFillmentCartParamsId(scope, _order_id), _eoa),
+    )
+
+    const push_url = whenNotError(paramsSaved, () => push_destination)
 
     const enabled_payment_types = [PaymentTypes.Card]
     const card = {

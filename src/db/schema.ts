@@ -31,11 +31,43 @@ export const quantity = {
   },
 } satisfies RediSearchSchema
 
+export const status = {
+  '$.status': {
+    type: SchemaFieldTypes.TAG,
+    AS: 'status',
+  },
+} satisfies RediSearchSchema
+
+export const order_id = {
+  '$.order_id': {
+    type: SchemaFieldTypes.TAG,
+    AS: 'order_id',
+  },
+} satisfies RediSearchSchema
+
+export const ordered_at = {
+  '$.ordered_at': {
+    type: SchemaFieldTypes.NUMERIC,
+    AS: 'ordered_at',
+  },
+} satisfies RediSearchSchema
+
+export const group = {
+  '$.group': {
+    type: SchemaFieldTypes.TAG,
+    AS: 'group',
+  },
+} satisfies RediSearchSchema
+
 export const CARTITEM_SCHEMA = {
   ...scope,
   ...eoa,
   ...payload,
   ...quantity,
+  ...status,
+  ...group,
+  ...order_id,
+  ...ordered_at,
 }
 
 export const CARTITEM_SCHEMA_ID = keccak256(
