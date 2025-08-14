@@ -7,7 +7,7 @@
       :class="{ 'animate-pulse': loading, 'bg-red-600': error }"
     >
       <IconBouncingArrowRight
-        v-if="!loading"
+        v-if="completed || (!completed && !loading)"
         :justifyLeft="true"
         class="group-disabled:hidden"
       />
@@ -39,6 +39,7 @@ const props = defineProps<{
 
 const account = ref<string | undefined>(undefined)
 const loading = ref(false)
+const completed = ref(false)
 const error = ref<string | undefined>(undefined)
 const i18nBase = i18nFactory(Strings)
 const i18n = ref(i18nBase(['en']))
@@ -71,6 +72,7 @@ const onClick = async () => {
   error.value = err
   loading.value = false
   if (!err) {
+    completed.value = true
     props.onComplete()
   }
 }
