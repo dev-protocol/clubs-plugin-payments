@@ -10,3 +10,5 @@ export const abi = [
   'address _feeBeneficiary',
   'uint256 _feePercentage',
 ]
+
+export const PluginId = 'devprotocol:clubs:plugin:clubs-payments'

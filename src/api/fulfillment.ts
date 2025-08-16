@@ -11,10 +11,14 @@ import { sha512 } from 'crypto-hash'
 import { AbiCoder } from 'ethers'
 import { toPairs, tryCatch } from 'ramda'
 import { Status, createRequestBody } from '../utils/webhooks'
-import { createClient } from 'redis'
-import { generateFulFillmentParamsId } from '../utils/gen-key'
+import {
+  generateFulFillmentCartParamsId,
+  generateFulFillmentParamsId,
+} from '../utils/gen-key'
 import jsonwebtoken from 'jsonwebtoken'
 import { abi } from '../constants'
+import { complete } from '../fixtures/fulfillment/cart'
+import { Redis } from '@devprotocol/clubs-core/redis'
 
 export type RequestBody = {
   merchant_id: string
@@ -38,28 +42,33 @@ const headers = {
 }
 
 /**
- * This endpoint is expected to be called with the following parameters:
- * ?params={ABI_ENCODED_PARAMS}
+ * This API route handles the fulfillment of a cart order, or a specific order.
  */
 export const post: ({
+  cart,
+  scope,
+  propertyAddress,
   chainId,
   rpcUrl,
   webhookOnFulfillment,
 }: {
-  chainId: number
-  rpcUrl: string
-  webhookOnFulfillment?: string
+  readonly cart?: boolean
+  readonly scope?: string
+  readonly propertyAddress?: string
+  readonly chainId: number
+  readonly rpcUrl: string
+  readonly webhookOnFulfillment?: string
 }) => APIRoute =
-  ({ chainId, rpcUrl, webhookOnFulfillment }) =>
+  ({ cart, scope, propertyAddress, chainId, rpcUrl, webhookOnFulfillment }) =>
   async ({ request }) => {
-    const {
-      POP_SERVER_KEY,
-      SEND_DEVPROTOCOL_API_KEY,
-      SALT,
-      REDIS_URL,
-      REDIS_USERNAME,
-      REDIS_PASSWORD,
-    } = import.meta.env
+    const { POP_SERVER_KEY, SEND_DEVPROTOCOL_API_KEY, SALT } = import.meta.env
+
+    const cartbasedpay =
+      cart === true &&
+      typeof scope === 'string' &&
+      typeof propertyAddress === 'string' &&
+      scope !== '' &&
+      propertyAddress !== ''
 
     // Step 1 - Read all the parameters and their values
     const verification$1: ErrorOr<RequestBody> = await request
@@ -123,23 +132,15 @@ export const post: ({
     )
     console.log(7, { verify })
 
-    const client = await whenNotError(
-      createClient({
-        url: REDIS_URL,
-        username: REDIS_USERNAME ?? '',
-        password: REDIS_PASSWORD ?? '',
-      }),
-      (db) =>
-        db
-          .connect()
-          .then(() => db)
-          .catch((err) => new Error(err)),
-    )
+    const client = await Redis.client().catch((err: Error) => err)
 
-    const paramsFromDb = await whenNotErrorAll(
-      [client, verification$1],
-      ([db, { order_id }]) => db.get(generateFulFillmentParamsId(order_id)),
-    )
+    const paramsFromDb = cartbasedpay
+      ? await whenNotErrorAll([client, verification$1], ([db, { order_id }]) =>
+          db.get(generateFulFillmentCartParamsId(scope, order_id)),
+        )
+      : await whenNotErrorAll([client, verification$1], ([db, { order_id }]) =>
+          db.get(generateFulFillmentParamsId(order_id)),
+        )
 
     const paramsSaved = whenNotError(
       paramsFromDb,
@@ -147,11 +148,14 @@ export const post: ({
         whenDefined(p, (x) => x) ?? new Error('Required params is not defined'),
     )
 
-    const params = whenNotError(paramsSaved, (p) =>
-      tryCatch(
-        (v: string) => AbiCoder.defaultAbiCoder().decode(abi, v).map(String),
-        (err: Error) => new Error(err.message ?? err),
-      )(p),
+    const params = whenNotError(paramsSaved, (it) =>
+      cartbasedpay
+        ? it // Saved EOA
+        : tryCatch(
+            (v: string) =>
+              AbiCoder.defaultAbiCoder().decode(abi, v).map(String),
+            (err: Error) => new Error(err.message ?? err),
+          )(it),
     )
     console.log(8, { params })
 
@@ -159,39 +163,49 @@ export const post: ({
       ? verification$1.order_id
       : 'clubs-payments'
 
-    const result$1 = await whenNotErrorAll(
-      [params, verify],
-      ([[to, property, payload, token, input, gatewayAddress, fee]]) =>
-        fetch(
-          'https://send.devprotocol.xyz/api/send-transactions/SwapTokensAndStakeDev',
-          {
-            method: 'POST',
-            headers: {
-              Authorization: `Bearer ${SEND_DEVPROTOCOL_API_KEY}`,
-            },
-            body: JSON.stringify({
-              requestId: orderId,
-              rpcUrl,
-              chainId,
-              args: {
-                to,
-                property,
-                payload,
-                gatewayAddress,
-                amounts: {
-                  token,
-                  input,
-                  fee,
+    const result$1 = cartbasedpay
+      ? await whenNotErrorAll(
+          [typeof params === 'string' ? params : new Error(), verify],
+          ([eoa]) =>
+            complete({ scope, eoa, order_id: orderId, propertyAddress }),
+        )
+      : await whenNotErrorAll(
+          [params, verify],
+          ([[to, property, payload, token, input, gatewayAddress, fee]]) =>
+            fetch(
+              'https://send.devprotocol.xyz/api/send-transactions/SwapTokensAndStakeDev',
+              {
+                method: 'POST',
+                headers: {
+                  Authorization: `Bearer ${SEND_DEVPROTOCOL_API_KEY}`,
                 },
+                body: JSON.stringify({
+                  requestId: orderId,
+                  rpcUrl,
+                  chainId,
+                  args: {
+                    to,
+                    property,
+                    payload,
+                    gatewayAddress,
+                    amounts: {
+                      token,
+                      input,
+                      fee,
+                    },
+                  },
+                }),
               },
-            }),
-          },
-        ).catch((err) => new Error(err)),
-    )
+            ).catch((err) => new Error(err)),
+        )
     console.log(9, { result$1 })
 
     const result$2 = whenNotError(result$1, (res) =>
-      res.ok ? true : new Error('Failed to send blockchain transaction.'),
+      res instanceof Response
+        ? res.ok
+          ? true
+          : new Error('Failed to send blockchain transaction.')
+        : true,
     )
 
     const reqBody = whenNotError(verification$1, (res) => ({

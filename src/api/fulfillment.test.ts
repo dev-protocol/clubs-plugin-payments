@@ -5,6 +5,7 @@ import { abi } from '../constants'
 import type { APIContext } from 'astro'
 import { toPairs } from 'ramda'
 import redis from 'redis'
+import { Redis } from '@devprotocol/clubs-core/redis'
 import fetch from 'cross-fetch'
 import jsonwebtoken from 'jsonwebtoken'
 import { AbiCoder, ZeroAddress, randomBytes } from 'ethers'
@@ -27,32 +28,37 @@ enum MockUses {
   Error = 'error',
 }
 
-const redisConnectMocks: Map<MockUses, () => Promise<any>> = new Map([
-  [
-    MockUses.Default,
-    async () => {
-      return null
-    },
-  ],
-  [
-    MockUses.Error,
-    async () => {
-      throw new Error('REDIS ERROR')
-    },
-  ],
-])
+// const redisConnectMocks: Map<MockUses, () => Promise<any>> = new Map([
+//   [
+//     MockUses.Default,
+//     async () => {
+//       return null
+//     },
+//   ],
+//   [
+//     MockUses.Error,
+//     async () => {
+//       throw new Error('REDIS ERROR')
+//     },
+//   ],
+// ])
 let redisConnectUses: MockUses = MockUses.Default
 
-vi.mock('redis', async () => {
+vi.mock('@devprotocol/clubs-core/redis', async () => {
   const actual: typeof redis = await vi.importActual('redis')
   const lib = vi.fn(() => ({
-    connect: vi.fn(() => redisConnectMocks.get(redisConnectUses)?.()),
+    // connect: vi.fn(() => redisConnectMocks.get(redisConnectUses)?.()),
     get: vi.fn(async (k) => redisData.get(k)),
     set: vi.fn(async (k, v) => redisData.set(k, v)),
     quit: vi.fn(),
   }))
+  const client = vi.fn(() =>
+    redisConnectUses === MockUses.Default
+      ? Promise.resolve(lib())
+      : Promise.reject(new Error('Error: REDIS ERROR')),
+  )
 
-  return { ...actual, default: actual, createClient: lib }
+  return { ...actual, default: actual, Redis: { client } }
 })
 vi.mock('cross-fetch', () => {
   const lib = vi.fn(async (url: string, opts?: RequestInit) => {
@@ -61,8 +67,8 @@ vi.mock('cross-fetch', () => {
       ? Promise.reject(new Error('ERROR'))
       : url.includes(WILL_BE_FAILED_TO_FETCH) ||
           opts?.body?.toString().includes(WILL_BE_FAILED_TO_FETCH)
-        ? { ok: false }
-        : { ok: true }
+        ? new Response(null, { status: 500 })
+        : new Response(null, { status: 200 })
   })
   return { default: lib }
 })
