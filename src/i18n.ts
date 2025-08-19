@@ -18,4 +18,8 @@ export const Strings = {
     en: 'Please wait until the purchase is complete.',
     ja: '購入が完了するまでお待ちください。',
   },
+  AddCart: {
+    en: 'Add to cart',
+    ja: 'カートに追加',
+  },
 } satisfies ClubsI18nParts

@@ -29,4 +29,20 @@ export type Override = {
   }
 }
 
+export enum CartItemStatus {
+  Completed = 'completed',
+}
+
+export type CartItem = {
+  scope: string
+  eoa: string
+  payload: string
+  quantity: number
+  group?: string
+  status?: CartItemStatus
+  session: string
+  order_id?: string
+  ordered_at?: number
+}
+
 export type ComposedItem = Override & { source: Membership }
