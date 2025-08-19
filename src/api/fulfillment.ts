@@ -19,6 +19,7 @@ import jsonwebtoken from 'jsonwebtoken'
 import { abi } from '../constants'
 import { complete } from '../fixtures/fulfillment/cart'
 import { Redis } from '@devprotocol/clubs-core/redis'
+import type { ClubsConfiguration } from '@devprotocol/clubs-core'
 
 export type RequestBody = {
   merchant_id: string
@@ -47,28 +48,27 @@ const headers = {
 export const post: ({
   cart,
   scope,
-  propertyAddress,
   chainId,
   rpcUrl,
   webhookOnFulfillment,
+  config,
 }: {
   readonly cart?: boolean
   readonly scope?: string
-  readonly propertyAddress?: string
   readonly chainId: number
   readonly rpcUrl: string
   readonly webhookOnFulfillment?: string
+  readonly config?: ClubsConfiguration
 }) => APIRoute =
-  ({ cart, scope, propertyAddress, chainId, rpcUrl, webhookOnFulfillment }) =>
+  ({ cart, scope, chainId, rpcUrl, webhookOnFulfillment, config }) =>
   async ({ request }) => {
     const { POP_SERVER_KEY, SEND_DEVPROTOCOL_API_KEY, SALT } = import.meta.env
 
     const cartbasedpay =
       cart === true &&
       typeof scope === 'string' &&
-      typeof propertyAddress === 'string' &&
-      scope !== '' &&
-      propertyAddress !== ''
+      typeof config === 'object' &&
+      scope !== ''
 
     // Step 1 - Read all the parameters and their values
     const verification$1: ErrorOr<RequestBody> = await request
@@ -166,8 +166,7 @@ export const post: ({
     const result$1 = cartbasedpay
       ? await whenNotErrorAll(
           [typeof params === 'string' ? params : new Error(), verify],
-          ([eoa]) =>
-            complete({ scope, eoa, order_id: orderId, propertyAddress }),
+          ([eoa]) => complete({ scope, eoa, order_id: orderId, config }),
         )
       : await whenNotErrorAll(
           [params, verify],

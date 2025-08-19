@@ -59,13 +59,6 @@ export const ordered_at = {
   },
 } satisfies RediSearchSchema
 
-export const group = {
-  '$.group': {
-    type: SchemaFieldTypes.TAG,
-    AS: 'group',
-  },
-} satisfies RediSearchSchema
-
 export const CARTITEM_SCHEMA = {
   ...scope,
   ...eoa,
@@ -73,7 +66,6 @@ export const CARTITEM_SCHEMA = {
   ...quantity,
   ...status,
   ...session,
-  ...group,
   ...order_id,
   ...ordered_at,
 }

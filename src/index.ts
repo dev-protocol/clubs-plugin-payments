@@ -112,7 +112,7 @@ export const getApiPaths = (async (options, config, utils) => {
       handler: post({
         cart: true,
         scope,
-        propertyAddress,
+        config,
         webhookOnFulfillment: webhooks?.fulfillment?.encrypted,
         chainId,
         rpcUrl,

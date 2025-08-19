@@ -4,8 +4,9 @@ import { verify } from '../utils/account'
 import { getCart } from '../db/cart'
 import { checkoutPassportItemForPayload } from '@devprotocol/clubs-plugin-passports'
 import { Redis } from '@devprotocol/clubs-core/redis'
-import type { ClubsConfiguration } from '@devprotocol/clubs-core'
+import { type ClubsConfiguration } from '@devprotocol/clubs-core'
 import { headers } from '../fixtures/url/json'
+import { APICartResult } from '../types'
 
 /**
  * Get the cart for the given scope.
@@ -44,13 +45,26 @@ export const getCartHandler: ({
             item.payload,
             { config, client },
           )
-          return { ...item, passportItem }
+          const bundledPassportItems = passportItem?.props.offering.bundle
+            ? (
+                await Promise.all(
+                  Array.from(new Set(passportItem.props.offering.bundle)).map(
+                    (payload) =>
+                      checkoutPassportItemForPayload(payload, {
+                        config,
+                        client,
+                      }),
+                  ),
+                )
+              ).filter((item) => item !== undefined)
+            : []
+          return { ...item, passportItem, bundledPassportItems }
         }),
       )
       return {
         total,
         data,
-      }
+      } satisfies APICartResult
     })
 
     return result instanceof Error
