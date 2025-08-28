@@ -51,10 +51,10 @@
     "@types/dotenv": "8.2.3",
     "@types/eslint__js": "^9.0.0",
     "@types/node": "^22.0.0",
-    "@types/react": "19.1.10",
-    "@types/react-dom": "19.1.7",
+    "@types/react": "19.1.12",
+    "@types/react-dom": "19.1.8",
     "@types/uuid": "^10.0.0",
-    "astro": "5.12.9",
+    "astro": "5.13.4",
     "dotenv": "17.2.1",
     "eslint": "^9.13.0",
     "eslint-config-prettier": "^10.0.0",
@@ -68,14 +68,14 @@
     "prettier-plugin-tailwindcss": "0.6.14",
     "rollup": "^4.24.2",
     "rollup-plugin-dts": "^6.1.1",
-    "sass": "1.90.0",
-    "svelte": "5.38.1",
+    "sass": "1.91.0",
+    "svelte": "5.38.5",
     "svelte-check": "^4.0.0",
-    "tailwindcss": "4.1.11",
+    "tailwindcss": "4.1.12",
     "typescript": "5.9.2",
     "typescript-eslint": "^8.11.0",
     "vitest": "1.6.1",
-    "vue": "3.5.18",
+    "vue": "3.5.20",
     "vue-tsc": "^3.0.0"
   },
   "dependencies": {
@@ -99,5 +99,5 @@
   "repository": "https://github.com/dev-protocol/clubs-plugin-payments.git",
   "author": "",
   "license": "PolyForm Perimeter License 1.0.0",
-  "packageManager": "yarn@4.9.2"
+  "packageManager": "yarn@4.9.4"
 }
