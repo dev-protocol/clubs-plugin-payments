@@ -71,6 +71,7 @@ import { Strings } from './i18n'
 import PosMp4 from './images/pos-terminal.mp4'
 import { Signer } from 'ethers'
 import { PluginId } from './constants'
+import { loadLibrary } from './utils'
 
 const props = defineProps<{
   cart?: boolean
@@ -105,6 +106,11 @@ let signer: Signer | undefined
 
 onMounted(async () => {
   i18n.value = i18nBase(navigator.languages)
+
+  whenDefined(import.meta.env.PUBLIC_POP_CLIENT_KEY, (clientKey) => {
+    loadLibrary({ clientKey })
+  })
+
   const { connection } = await import('@devprotocol/clubs-core/connection')
 
   connection().account.subscribe(async (acc) => {

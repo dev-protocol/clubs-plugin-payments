@@ -8,7 +8,7 @@ import {
 import { bytes32Hex, ClubsOffering } from '@devprotocol/clubs-core'
 import { verify } from '../utils/account'
 import { CartItem } from '../types'
-import { getCartItem, getLatestSession, updateCart } from '../db/cart'
+import { getLatestSession, updateCart } from '../db/cart'
 import { headers } from '../fixtures/url/json'
 
 /**
@@ -70,20 +70,14 @@ export const addCartHandler: ({
       getLatestSession({ scope, eoa: user }).catch((err) => new Error(err)),
     )
 
-    const existingItem = await whenNotErrorAll(
-      [props, eoa, session],
-      ([{ payload }, _eoa, _session]) =>
-        getCartItem({ scope, eoa: _eoa, payload, session: _session }),
-    )
-
     const item = whenNotErrorAll(
-      [eoa, props, existingItem, session, exists],
-      ([_eoa, _props, _existingItem, _session]) =>
+      [eoa, props, session, exists],
+      ([_eoa, _props, _session]) =>
         ({
           scope,
           eoa: _eoa,
           payload: _props.payload,
-          quantity: _props.quantity + (_existingItem?.quantity ?? 0),
+          quantity: _props.quantity,
           session: _session,
         }) satisfies CartItem,
     )
