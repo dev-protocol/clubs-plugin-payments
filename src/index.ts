@@ -84,7 +84,7 @@ export const getApiPaths = (async (options, config, utils) => {
       fulfillment?: { encrypted: string }
     }>) ?? {}
   const scope = generateScopeBy(config.url)
-  const orderPrefix = new URL(config.url).host
+  const orderPrefix = new URL(config.url).host.replace(/[.:]/g, '_')
 
   return [
     {

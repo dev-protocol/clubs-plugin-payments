@@ -75,7 +75,7 @@ export const getPaymentKeyByCart: ({
 
     const order_id = whenNotErrorAll(
       [shortEoa],
-      ([_shortEoa]) => `ORDER-${orderPrefix}-${_shortEoa}-${randomHash(3)}`,
+      ([_shortEoa]) => `ORD-${orderPrefix}-${_shortEoa}-${randomHash(3)}`,
     )
     const gross_amount = whenNotError(offeringItems, (_items) =>
       _items.reduce(
