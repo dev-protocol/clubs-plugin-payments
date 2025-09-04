@@ -156,6 +156,7 @@ const waitForCompleted = async () => {
             const body = await result.json()
             const items = body.data as CartItem[]
             if (
+              items.length > 0 &&
               items.every((item) => item.status === CartItemStatus.Completed)
             ) {
               clearInterval(polling)
@@ -307,29 +308,31 @@ const clickHandler = async () => {
   })
 
   const pay = await whenNotError(paymentKey, (key) =>
-    new Promise<{}>((resolve, reject) => {
-      pop.pay(key, {
-        skipOrderSummary: true,
-        autoReturn: true,
-        language: 'en', //'en' | 'ja' | 'zh'
-        onSuccess: function (result: any) {
-          console.log('success')
-          console.log(result)
-          waitingForCompleted.value = true
-          return resolve(result as {})
-        },
-        onFailure: function (result: any) {
-          console.log('failure')
-          console.log(result)
-          return reject(new Error(`${result.result_code}: ${result.status}`))
-        },
-        onIncomplete: function (result: any) {
-          console.log('incomplete')
-          console.log(result)
-          return reject(new Error(`${result.status}`))
-        },
-      })
-    }).catch((err: Error) => err),
+    whenDefined(key, (_key) =>
+      new Promise<{}>((resolve, reject) => {
+        pop.pay(_key, {
+          skipOrderSummary: true,
+          autoReturn: true,
+          language: 'en', //'en' | 'ja' | 'zh'
+          onSuccess: function (result: any) {
+            console.log('success')
+            console.log(result)
+            waitingForCompleted.value = true
+            return resolve(result as {})
+          },
+          onFailure: function (result: any) {
+            console.log('failure')
+            console.log(result)
+            return reject(new Error(`${result.result_code}: ${result.status}`))
+          },
+          onIncomplete: function (result: any) {
+            console.log('incomplete')
+            console.log(result)
+            return reject(new Error(`${result.status}`))
+          },
+        })
+      }).catch((err: Error) => err),
+    ),
   )
 
   whenDefined(dialog.value, (dia) => {

@@ -1,5 +1,5 @@
 import type { APIRoute } from 'astro'
-import { whenNotError, whenNotErrorAll } from '@devprotocol/util-ts'
+import { isNotError, whenNotError, whenNotErrorAll } from '@devprotocol/util-ts'
 import {
   bytes32Hex,
   type ClubsConfiguration,
@@ -12,6 +12,7 @@ import { verify } from '../utils/account'
 import { getCart } from '../db/cart'
 import { generateFulFillmentCartParamsId } from '../utils/gen-key'
 import { randomHash } from '../utils/hash'
+import { complete } from '../fixtures/fulfillment/cart'
 
 /**
  * This endpoint is expected to be called with the following parameters:
@@ -137,5 +138,14 @@ export const getPaymentKeyByCart: ({
 
     console.log({ options })
 
-    return callNRes(options)
+    const [res] = await Promise.all([
+      callNRes(options),
+      isNotError(options) && options.gross_amount === 0
+        ? whenNotErrorAll([eoa, options], ([_eoa, { order_id }]) =>
+            complete({ scope, eoa: _eoa, order_id, config }),
+          )
+        : Promise.resolve(),
+    ])
+
+    return res
   }
