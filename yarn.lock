@@ -919,9 +919,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@devprotocol/clubs-core@npm:3.27.0":
-  version: 3.27.0
-  resolution: "@devprotocol/clubs-core@npm:3.27.0"
+"@devprotocol/clubs-core@npm:3.28.0":
+  version: 3.28.0
+  resolution: "@devprotocol/clubs-core@npm:3.28.0"
   dependencies:
     "@devprotocol/dev-kit": "npm:8.7.0"
     "@devprotocol/elements": "npm:1.6.0"
@@ -969,7 +969,7 @@ __metadata:
       optional: true
     vue:
       optional: true
-  checksum: 10c0/b1894f8e52448f8cd5fcfa33742eca4413d45f22e278d66ee3757d3f2ec019de0b5aedd3fa0ad247a24aa9c41b13a3bcd12b363034541246b4b4e05942a9cbab
+  checksum: 10c0/c6eab5c96e5aeb62416467200e3a58fa33bf0da4828a43b95c4b428fd924c66e595fa6fecf04486ce4e197f24fda19479fb5f0de56f3b16aa9d986c1152323ee
   languageName: node
   linkType: hard
 
@@ -1001,7 +1001,7 @@ __metadata:
     "@astrojs/svelte": "npm:7.1.0"
     "@astrojs/tailwind": "npm:6.0.2"
     "@astrojs/vue": "npm:5.1.0"
-    "@devprotocol/clubs-core": "npm:3.27.0"
+    "@devprotocol/clubs-core": "npm:3.28.0"
     "@devprotocol/clubs-plugin-passports": "npm:0.9.0-alpha.3"
     "@devprotocol/dev-kit": "npm:8.7.0"
     "@devprotocol/util-ts": "npm:4.0.0"
