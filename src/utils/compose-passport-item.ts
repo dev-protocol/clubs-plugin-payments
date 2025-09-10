@@ -20,11 +20,12 @@ export const composePassportItem = async (
   })
   return whenDefinedAll(
     [
+      passportItem?.props.offering.deprecated !== true ? true : undefined,
       passportItem,
       passportItem?.props.discount?.price.yen ??
         passportItem?.props.fiat?.price.yen,
     ],
-    ([item, yen]) => ({
+    ([, item, yen]) => ({
       payload,
       price: {
         yen,

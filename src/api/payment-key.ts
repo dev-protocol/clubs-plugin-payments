@@ -12,7 +12,9 @@ import BigNumber from 'bignumber.js'
 import { abi } from '../constants'
 import type { ComposedItem } from '../types'
 import {
+  ErrorOr,
   isNotError,
+  whenDefined,
   whenDefinedAll,
   whenNotError,
   whenNotErrorAll,
@@ -25,17 +27,23 @@ import {
   getTokenAddress,
 } from '@devprotocol/clubs-core'
 import { composePassportItem } from '../utils/compose-passport-item'
+import { headers } from '../fixtures/url/json'
 
 const { POP_SERVER_KEY, REDIS_URL, REDIS_USERNAME, REDIS_PASSWORD } =
   import.meta.env
-const AUTH_STRING = Buffer.from(`${POP_SERVER_KEY}:`).toString('base64')
+export const AUTH_STRING = Buffer.from(`${POP_SERVER_KEY}:`).toString('base64')
 
 export type Success = {
-  payment_key: string // '28GTzdVOZNeImaHMDeQF1319'
-  result_code: string //'R000'
+  payment_key?: string // '28GTzdVOZNeImaHMDeQF1319'
+  result_code?: string //'R000'
   status: 'success'
-  message: string //'"Payment Key" has been generated successfully'
-  payment_key_expiry_time: string //'20200401000000'
+  message?: string //'"Payment Key" has been generated successfully'
+  payment_key_expiry_time?: string //'20200401000000'
+  _clubs: {
+    // Injected by CLUBS
+    order_id: string // 'ORDER-<UUID>'
+    gross_amount: number
+  }
 }
 
 export type Failure = {
@@ -113,6 +121,51 @@ export type PaymentKeyOptions = {
     show_items_additional_message?: boolean
     items_additional_message?: string
   }
+}
+
+export const callNRes = async (options: ErrorOr<PaymentKeyOptions>) => {
+  const isFree = whenNotError(options, (opts) => opts.gross_amount === 0)
+  const paymentKey = await whenNotErrorAll([options, isFree], ([opts, free]) =>
+    free
+      ? undefined
+      : fetch('https://pay3.veritrans.co.jp/pop/v1/payment-key', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json; charset=utf-8',
+            Authorization: `Basic ${AUTH_STRING}`,
+          },
+          body: JSON.stringify(opts),
+        }).catch((err) => new Error(err)),
+  )
+
+  const result = await whenNotErrorAll(
+    [paymentKey, options],
+    ([res, { order_id }]) =>
+      whenDefined(res, (_res) =>
+        _res
+          .json()
+          .then(
+            (x) =>
+              ({
+                ...x,
+                _clubs: { order_id, gross_amount: x.gross_amount },
+              }) as Success,
+          )
+          .catch((err) => new Error(err)),
+      ) ??
+      ({ status: 'success', _clubs: { order_id, gross_amount: 0 } } as Success),
+  )
+
+  return result instanceof Error
+    ? new Response(
+        JSON.stringify({
+          result_code: 'E1',
+          status: 'failure',
+          message: result.message,
+        }),
+        { status: 400, headers: headers() },
+      )
+    : new Response(JSON.stringify(result), { status: 200, headers: headers() })
 }
 
 /**
@@ -273,32 +326,6 @@ export const get: ({
      * Post them and return the content.
      *
      */
-    const paymentKey = await whenNotError(options, (opts) =>
-      fetch('https://pay3.veritrans.co.jp/pop/v1/payment-key', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json; charset=utf-8',
-          Authorization: `Basic ${AUTH_STRING}`,
-        },
-        body: JSON.stringify(opts),
-      }).catch((err) => new Error(err)),
-    )
 
-    const result = await whenNotError(paymentKey, (res) =>
-      res
-        .text()
-        .then((x) => x as string)
-        .catch((err) => new Error(err)),
-    )
-
-    return result instanceof Error
-      ? new Response(
-          JSON.stringify({
-            result_code: 'E1',
-            status: 'failure',
-            message: result.message,
-          }),
-          { status: 400 },
-        )
-      : new Response(result, { status: 200 })
+    return callNRes(options)
   }
