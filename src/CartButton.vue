@@ -55,10 +55,10 @@ const message = `Add Cart: ${bytes32Hex(props.payload)}`
 let signer: Signer | undefined
 
 const onClick = async () => {
-  loading.value = true
   if (!signer) {
     return clubsConnection.value?.signal.next(Signal.SignInRequest)
   }
+  loading.value = true
   const signature = await signer?.signMessage(message)
   const url = new URL(`${props.base}/api/${PluginId}/cart`)
 
