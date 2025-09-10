@@ -24,11 +24,17 @@
 <script lang="ts" setup>
 import { ref, onMounted } from 'vue'
 import { UndefinedOr, whenDefined, whenDefinedAll } from '@devprotocol/util-ts'
-import { bytes32Hex, ClubsOffering, i18nFactory } from '@devprotocol/clubs-core'
+import {
+  bytes32Hex,
+  ClubsOffering,
+  i18nFactory,
+  Signal,
+} from '@devprotocol/clubs-core'
 import { Strings } from './i18n'
 import { Signer } from 'ethers'
 import { PluginId } from './constants'
 import { IconBouncingArrowRight } from '@devprotocol/clubs-core/ui/vue'
+import type { connection as ConnectionType } from '@devprotocol/clubs-core/connection'
 
 const props = defineProps<{
   payload: ClubsOffering['payload']
@@ -43,12 +49,16 @@ const completed = ref(false)
 const error = ref<string | undefined>(undefined)
 const i18nBase = i18nFactory(Strings)
 const i18n = ref(i18nBase(['en']))
+const clubsConnection = ref<ReturnType<typeof ConnectionType>>()
 const message = `Add Cart: ${bytes32Hex(props.payload)}`
 
 let signer: Signer | undefined
 
 const onClick = async () => {
   loading.value = true
+  if (!signer) {
+    return clubsConnection.value?.signal.next(Signal.SignInRequest)
+  }
   const signature = await signer?.signMessage(message)
   const url = new URL(`${props.base}/api/${PluginId}/cart`)
 
@@ -80,6 +90,8 @@ const onClick = async () => {
 onMounted(async () => {
   i18n.value = i18nBase(navigator.languages)
   const { connection } = await import('@devprotocol/clubs-core/connection')
+
+  clubsConnection.value = connection()
 
   connection().account.subscribe(async (acc) => {
     account.value = acc
