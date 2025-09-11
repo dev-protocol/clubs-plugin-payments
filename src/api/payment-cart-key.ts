@@ -23,13 +23,15 @@ export const getPaymentKeyByCart: ({
   scope,
   orderPrefix,
   offerings,
+  debug,
 }: {
   config: ClubsConfiguration
   scope: string
   orderPrefix: string
   offerings: ClubsOffering[]
+  debug: boolean
 }) => APIRoute =
-  ({ config, scope, orderPrefix, offerings }) =>
+  ({ config, scope, orderPrefix, offerings, debug }) =>
   async ({ url }) => {
     /**
      * Get request parameters.
@@ -38,7 +40,7 @@ export const getPaymentKeyByCart: ({
       url.searchParams.get('message') ?? new Error('Missing message')
     const signature =
       url.searchParams.get('signature') ?? new Error('Missing signature')
-    const dummy = url.searchParams.get('dummy') === 'true'
+    const dummy = debug
     const customer_name = url.searchParams.get('email.customer_name')
     const customer_email_address = url.searchParams.get(
       'email.customer_email_address',

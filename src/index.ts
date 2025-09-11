@@ -85,17 +85,24 @@ export const getApiPaths = (async (options, config, utils) => {
     }>) ?? {}
   const scope = generateScopeBy(config.url)
   const orderPrefix = new URL(config.url).host.replace(/[.:]/g, '_')
+  const debug = options.find(({ key }) => key === 'debug')?.value === true
 
   return [
     {
       paths: ['payment-key'],
       method: 'GET',
-      handler: get({ config, items, propertyAddress, chainId }),
+      handler: get({ config, items, propertyAddress, chainId, debug }),
     },
     {
       paths: ['payment-key', 'cart'],
       method: 'GET',
-      handler: getPaymentKeyByCart({ config, scope, orderPrefix, offerings }),
+      handler: getPaymentKeyByCart({
+        config,
+        scope,
+        orderPrefix,
+        offerings,
+        debug,
+      }),
     },
     {
       paths: ['fulfillment'],

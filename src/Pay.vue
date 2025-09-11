@@ -84,7 +84,7 @@ const props = defineProps<{
     email?: string
     name?: string
   }
-  debugMode: boolean
+  debugMode?: boolean
   base: string
 }>()
 
@@ -223,7 +223,6 @@ const clickHandler = async () => {
               account: account_,
               customerName: customerName_,
               customerEmail: customerEmail_,
-              dummy: props.debugMode,
             }),
           ),
           // Cart-based payment info
@@ -263,7 +262,6 @@ const clickHandler = async () => {
     url.searchParams.set('eoa', info.account)
     url.searchParams.set('email.customer_name', info.customerName)
     url.searchParams.set('email.customer_email_address', info.customerEmail)
-    url.searchParams.set('dummy', String(info.dummy))
     if (cart && cart !== true) {
       url.searchParams.set('message', cart.message)
       url.searchParams.set('signature', cart.signature)

@@ -177,20 +177,22 @@ export const get: ({
   propertyAddress,
   chainId,
   items,
+  debug,
 }: {
   config: ClubsConfiguration
   propertyAddress: string
   chainId: number
   items: ComposedItem[]
+  debug: boolean
 }) => APIRoute =
-  ({ config, propertyAddress, chainId, items: _items }) =>
+  ({ config, propertyAddress, chainId, items: _items, debug }) =>
   async ({ url }) => {
     /**
      * Get request parameters.
      */
     const offeringPayload = url.searchParams.get('payload')
     const eoa = url.searchParams.get('eoa')
-    const dummy = url.searchParams.get('dummy') === 'true'
+    const dummy = url.searchParams.get('dummy') === 'true' || debug
     const customer_name = url.searchParams.get('email.customer_name')
     const customer_email_address = url.searchParams.get(
       'email.customer_email_address',
