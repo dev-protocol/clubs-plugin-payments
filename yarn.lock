@@ -1019,7 +1019,7 @@ __metadata:
     astro: "npm:5.13.7"
     bignumber.js: "npm:9.3.1"
     cross-fetch: "npm:^4.0.0"
-    crypto-hash: "npm:^3.0.0"
+    crypto-hash: "npm:^4.0.0"
     dotenv: "npm:17.2.2"
     eslint: "npm:^9.13.0"
     eslint-config-prettier: "npm:^10.0.0"
@@ -4864,10 +4864,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"crypto-hash@npm:^3.0.0":
-  version: 3.1.0
-  resolution: "crypto-hash@npm:3.1.0"
-  checksum: 10c0/6b914e880eaf1d35643d832bd8557b12712c541f818f17d208d8c8fcb13b0f905ebe0cdd9b133ee77d793cb8269433be0f35ea3da2be190158b59a7805d94ea4
+"crypto-hash@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "crypto-hash@npm:4.0.0"
+  checksum: 10c0/0127ba6044f9f495bb8895680783721e28126fb6e1a7e25d0be46d367bd68c91072b830dc663882286ac8f6099342f559a642f5f9e429861b522a410b9965920
   languageName: node
   linkType: hard
 
