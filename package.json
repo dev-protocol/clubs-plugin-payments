@@ -44,7 +44,7 @@
     "@astrojs/tailwind": "6.0.2",
     "@astrojs/vue": "5.1.1",
     "@devprotocol/clubs-core": "3.28.0",
-    "@devprotocol/clubs-plugin-passports": "0.11.6",
+    "@devprotocol/clubs-plugin-passports": "0.13.0",
     "@eslint/js": "^9.13.0",
     "@rollup/plugin-typescript": "^12.1.1",
     "@tailwindcss/typography": "^0.5.15",
@@ -93,7 +93,7 @@
   },
   "peerDependencies": {
     "@devprotocol/clubs-core": "^3.27.0",
-    "@devprotocol/clubs-plugin-passports": "^0.1.0-beta.36 || ^0.2.0 || ^0.3.0 || ^0.4.0 || ^0.5.0 || ^0.6.0 || ^0.7.0 || ^0.8.0 || ^0.9.0 || ^0.11.0",
+    "@devprotocol/clubs-plugin-passports": "^0.1.0-beta.36 || ^0.2.0 || ^0.3.0 || ^0.4.0 || ^0.5.0 || ^0.6.0 || ^0.7.0 || ^0.8.0 || ^0.9.0 || ^0.11.0 || ^0.13.0",
     "ethers": "^6.0.0"
   },
   "repository": "https://github.com/dev-protocol/clubs-plugin-payments.git",
