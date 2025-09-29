@@ -994,9 +994,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@devprotocol/clubs-plugin-passports@npm:0.14.1":
-  version: 0.14.1
-  resolution: "@devprotocol/clubs-plugin-passports@npm:0.14.1"
+"@devprotocol/clubs-plugin-passports@npm:0.14.5":
+  version: 0.14.5
+  resolution: "@devprotocol/clubs-plugin-passports@npm:0.14.5"
   dependencies:
     "@devprotocol/dev-kit": "npm:8.7.0"
     "@devprotocol/util-ts": "npm:4.0.0"
@@ -1010,7 +1010,7 @@ __metadata:
     "@devprotocol/clubs-core": ^3.18.0
     "@devprotocol/clubs-plugin-payments": ^0.2.3 || ^0.3.0 || ^0.4.0 || ^0.5.0
     ethers: ^6.0.0
-  checksum: 10c0/5b4a7240e23a24aab15dc69a2eb568b8f8564611a6b2b76ac839553d0e5ea9f3502f0abf6e777219dca151e48b01ebc9a00e1e844d3476c4f13ea8b37779c5f7
+  checksum: 10c0/12a0964cbf298822affdd537a8733f3f5530e41ab032155967e34f2729f54a3abb2c14a0200fabf9f4d9cef43a0553ef8535977ef7f7923a0a9d627ca286cf3f
   languageName: node
   linkType: hard
 
@@ -1023,7 +1023,7 @@ __metadata:
     "@astrojs/tailwind": "npm:6.0.2"
     "@astrojs/vue": "npm:5.1.1"
     "@devprotocol/clubs-core": "npm:3.28.0"
-    "@devprotocol/clubs-plugin-passports": "npm:0.14.1"
+    "@devprotocol/clubs-plugin-passports": "npm:0.14.5"
     "@devprotocol/dev-kit": "npm:8.7.0"
     "@devprotocol/util-ts": "npm:4.0.0"
     "@eslint/js": "npm:^9.13.0"
