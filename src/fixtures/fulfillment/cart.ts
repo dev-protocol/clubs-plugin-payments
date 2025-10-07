@@ -4,6 +4,7 @@ import { assetDocument, createAssetDocument } from '../clubsx/assets'
 import {
   ErrorOr,
   isNotError,
+  whenDefined,
   whenNotError,
   whenNotErrorAll,
 } from '@devprotocol/util-ts'
@@ -13,7 +14,8 @@ import {
   ClubsOffering,
 } from '@devprotocol/clubs-core'
 import type { PassportOffering } from '@devprotocol/clubs-plugin-passports/types'
-import { complement, has } from 'ramda'
+import { complement, has, repeat } from 'ramda'
+import { CartItem } from '../../types'
 
 type BundlePassportOffering = Omit<PassportOffering, 'bundle'> & {
   bundle: NonNullable<PassportOffering['bundle']>
@@ -22,16 +24,23 @@ type BundlePassportOffering = Omit<PassportOffering, 'bundle'> & {
 const hasBundle = has('bundle')
 const hasNoBundle = complement(hasBundle)
 
-const findOffering = (
+const findOffering = <T>(
   payload: ClubsOffering['payload'],
-  offerings?: ReadonlyArray<ClubsOffering>,
-): ErrorOr<ClubsOffering> => {
+  offerings: ReadonlyArray<ClubsOffering>,
+  data: T,
+): ErrorOr<ClubsOffering & { __data: T }> => {
   return (
-    (offerings ?? []).find(
-      (offering) => bytes32Hex(offering.payload) === bytes32Hex(payload),
+    whenDefined(
+      offerings.find(
+        (offering) => bytes32Hex(offering.payload) === bytes32Hex(payload),
+      ),
+      (off) => ({ ...off, __data: data }),
     ) ?? new Error('Offering not found')
   )
 }
+
+const duplicateCartItems = (offers: (ClubsOffering & { __data: CartItem })[]) =>
+  offers.map((o) => repeat(o, o.__data.quantity)).flat()
 
 export const complete = async ({
   scope,
@@ -53,34 +62,38 @@ export const complete = async ({
   })
   const singleOfferings = whenNotError(orderCompletionResult, (result) => {
     const resolvedOfferings = result
-      .map((res) => findOffering(res.payload, offerings))
+      .map((res) => findOffering(res.payload, offerings ?? [], res))
       .filter(hasNoBundle)
     return resolvedOfferings.every(isNotError)
-      ? resolvedOfferings
+      ? duplicateCartItems(resolvedOfferings)
       : new Error('Failed to process single offerings')
   })
+  type B = { payload: PassportOffering['payload']; cartItem: CartItem }[]
   const bundledOfferings = whenNotError(orderCompletionResult, (result) => {
-    const payloads = result.reduce(
-      (acc, cur) => {
-        const offering = (offerings ?? []).find(
-          (offering): offering is BundlePassportOffering => {
-            return (
-              hasBundle(offering) &&
-              Array.isArray(offering.bundle) &&
-              bytes32Hex(offering.payload) === bytes32Hex(cur.payload)
-            )
-          },
-        )
-        return [...acc, ...(offering?.bundle ?? [])]
-      },
-      [] as PassportOffering['payload'][],
-    )
-    const resolvedOfferings = payloads.map((payload) =>
-      findOffering(payload, offerings),
+    const payloads = result.reduce((acc, cur) => {
+      const offering = (offerings ?? []).find(
+        (offering): offering is BundlePassportOffering => {
+          return (
+            hasBundle(offering) &&
+            Array.isArray(offering.bundle) &&
+            bytes32Hex(offering.payload) === bytes32Hex(cur.payload)
+          )
+        },
+      )
+      return [
+        ...acc,
+        ...((offering?.bundle ?? []).map((p) => ({
+          payload: p,
+          cartItem: cur,
+        })) ?? []),
+      ]
+    }, [] as B)
+    const resolvedOfferings = payloads.map((b) =>
+      findOffering(b.payload, offerings ?? [], b.cartItem),
     )
 
     return resolvedOfferings.every(isNotError)
-      ? resolvedOfferings
+      ? duplicateCartItems(resolvedOfferings)
       : new Error('Failed to process bundled offerings')
   })
   const offeringsToProcess = whenNotErrorAll(
