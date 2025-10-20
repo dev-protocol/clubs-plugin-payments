@@ -39,7 +39,7 @@
     "typecheck": "astro check && tsc --noEmit && svelte-check && vue-tsc --noEmit --p tsconfig.vue.json"
   },
   "devDependencies": {
-    "@astrojs/check": "0.9.4",
+    "@astrojs/check": "0.9.5",
     "@astrojs/svelte": "7.2.0",
     "@astrojs/tailwind": "6.0.2",
     "@astrojs/vue": "5.1.1",
