@@ -4954,9 +4954,9 @@ __metadata:
   linkType: hard
 
 "crypto-hash@npm:^4.0.0":
-  version: 4.0.0
-  resolution: "crypto-hash@npm:4.0.0"
-  checksum: 10c0/0127ba6044f9f495bb8895680783721e28126fb6e1a7e25d0be46d367bd68c91072b830dc663882286ac8f6099342f559a642f5f9e429861b522a410b9965920
+  version: 4.0.1
+  resolution: "crypto-hash@npm:4.0.1"
+  checksum: 10c0/45f11ff0e2264619fdd5ea7646b16bc167d4964728e7c5cbbf1fd91661331dcbf9e4fc66084c37010042e3fa7e13d7dcf6b7f6339fd55572acf4ad7650febbf1
   languageName: node
   linkType: hard
 
