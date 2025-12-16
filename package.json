@@ -68,7 +68,7 @@
     "prettier-plugin-tailwindcss": "0.7.2",
     "rollup": "^4.24.2",
     "rollup-plugin-dts": "^6.1.1",
-    "sass": "1.96.0",
+    "sass": "1.97.0",
     "svelte": "5.46.0",
     "svelte-check": "^4.0.0",
     "tailwindcss": "4.1.18",
