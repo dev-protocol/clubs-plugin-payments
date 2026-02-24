@@ -1043,7 +1043,7 @@ __metadata:
     "@types/react-dom": "npm:19.2.3"
     "@types/uuid": "npm:^11.0.0"
     astro: "npm:5.17.3"
-    bignumber.js: "npm:9.3.1"
+    bignumber.js: "npm:10.0.2"
     cross-fetch: "npm:^4.0.0"
     crypto-hash: "npm:^4.0.0"
     dotenv: "npm:17.3.1"
@@ -4682,6 +4682,13 @@ __metadata:
   version: 1.0.0
   resolution: "base-64@npm:1.0.0"
   checksum: 10c0/d886cb3236cee0bed9f7075675748b59b32fad623ddb8ce1793c790306aa0f76a03238cad4b3fb398abda6527ce08a5588388533a4ccade0b97e82b9da660e28
+  languageName: node
+  linkType: hard
+
+"bignumber.js@npm:10.0.2":
+  version: 10.0.2
+  resolution: "bignumber.js@npm:10.0.2"
+  checksum: 10c0/471a17d851d275e458156d090c028b8851c84389dc41db79b08dd584b4df1e4d24f70b1684705a5974aec6c59dc8511337007e01bd78d8ed8d93e1a541356a7f
   languageName: node
   linkType: hard
 
